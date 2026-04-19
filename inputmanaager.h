@@ -1,6 +1,5 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-
 class inputManager
 {
 private:
@@ -8,8 +7,8 @@ private:
 	bool escape;
 
 public:
-	void getEnter();
-	void getEscape();
+	bool getEnter();
+	bool getEscape();
 	void update();
 
 
