@@ -13,7 +13,7 @@ public:
 	void handleInput(inputManager& input);
 	void update();
 	void render(sf::RenderWindow& window);
-
+	~playState();
 
 	//actual game logic will come here
 };
