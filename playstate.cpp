@@ -26,3 +26,6 @@ void playState::render(sf::RenderWindow& window)
 	//actual game rendering will come here
 	std::cout << "For testing! Entered play state render function\n";
 }
+playState::~playState()
+{
+}
