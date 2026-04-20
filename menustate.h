@@ -15,4 +15,5 @@ public:
 	void handleInput(inputManager& input);
 	void update();
 	void render(sf::RenderWindow& window);
+	~menuState();
 };
