@@ -7,7 +7,7 @@
 Gameloop::Gameloop()
 {
 	sf::RenderWindow window(sf::VideoMode(700, 700), "Snow Bros");
-	machine.changeState(new menuState(&stateMachine));
+	machine.changeState(new menuState(&machine));
 }
 
 void Gameloop::run() {
@@ -24,12 +24,12 @@ void Gameloop::run() {
         input.update();
 
         // 🔹 3. Let current state handle input + update
-        stateMachine.handleInput(input);
-        stateMachine.update();
+        machine.handleInput(input);
+        machine.update();
 
         // 🔹 4. Draw current state
         window.clear();
-        stateMachine.draw(window);
+        machine.render(window);
         window.display();
     }
 }
