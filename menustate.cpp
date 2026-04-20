@@ -28,3 +28,7 @@ void menuState::render(sf::RenderWindow& window)
 	//nothing to render in menu state for now
 	std::cout << "For testing! Entered menu state render function\n";
 }
+menuState::~menuState()
+{
+	// Empty is fine
+}
