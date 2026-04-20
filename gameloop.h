@@ -7,7 +7,7 @@
 class Gameloop
 {
 private:
-	st::renderWindow window;
+	sf::RenderWindow window;
 	StateMachine machine;
 	InputManager input;
 public:
