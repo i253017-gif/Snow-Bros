@@ -1,11 +1,11 @@
 #include<SFML/Graphics.hpp>
 #include"inputmanager.h"
 
-bool inputManager::getEnter()
+bool inputManager::isEnterPressed()
 {
 	return enter;
 }
-bool inputManager::getEscape()
+bool inputManager::isEscapePressed()
 {
 	return escape;
 }
