@@ -2,17 +2,17 @@
 #include"gameloop.h"
 #include"menustate.h"
 #include"statemachinee.h"
+#include<iostream>
 //include menu state
 
-Gameloop::Gameloop()
-{
-	sf::RenderWindow window(sf::VideoMode(700, 700), "Snow Bros");
-	machine.changeState(new menuState(&machine));
+Gameloop::Gameloop() : window(sf::VideoMode(700, 700), "Snow Bros")
+{                       //so window is not declared locally but is a class member
+    machine.changeState(new menuState(&machine));
 }
 
 void Gameloop::run() {
     while (window.isOpen()) {
-
+			std::cout << "For testing! Entered gameloop run function\n";
         // 🔹 1. Handle window events
         sf::Event event;
         while (window.pollEvent(event)) {
