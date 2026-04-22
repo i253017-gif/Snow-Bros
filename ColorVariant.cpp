@@ -30,8 +30,7 @@ ColorVariant::ColorVariant(Enemy* parent, int level, std::string e_type): Enemy(
 
     std::string color_name;
 
-    //file handling would get easier if we js define a path and change name and type accordingly
-    std::string file_path = "assets/" + enemy_type + "_" + color_name + ".png";
+    
     if (level <= 5) {
         color_name = "red";
     }
@@ -44,7 +43,6 @@ ColorVariant::ColorVariant(Enemy* parent, int level, std::string e_type): Enemy(
     else {
         color_name = "purple";
     }
-
 
     //hard coding our file paths to make work shorter
     std::string filename;
