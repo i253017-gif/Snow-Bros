@@ -1,65 +1,56 @@
 #include "EnemyFactory.h"
-#include "Botom.h"
+#include "Bottom.h"
 #include "FlyingFooga.h"
 #include "Tornado.h"
 #include "Mogera.h"
 #include "Gamakichi.h"
 #include "Mogera_child.h"
+#include"ColorVariant.h"
 
-float speed_mult(int level) {
-    if (level <= 5) {
-        return 1.0f;
-    }
-    else if (level <= 7) {
-        return 1.25f;
-    }                               //decides speed of enemies based on level
-    else if (level <= 8) {
-        return 1.5f;
-    }
-    else {
-        return 1.75f;
-    }
-}
-
-int extra_hits(int level) {
-    if (level <= 5) {
-        return 0;
-    }
-    else if (level <= 7) {
-        return 1;
-    }                        //the number of extra hits a player gets based on levl
-    else if (level <= 8) {
-        return 2;
-    }
-    else {
-        return 3;
-    }
-}
 
 Enemy* EnemyFactory::create(std::string type, int level) {
-
-    float speed = speed_mult(level);
-    int hits = extra_hits(level);
+    bool use_variant;
+    if (level >= 6 && type != "Mogera" && type != "Gamakichi"
+        && type != "Mogera_child")
+    {
+        use_variant = true;
+    }
+    else
+        use_variant = false;
+    
 
     if (type == "Botom") {
-        return new Botom(speed, hits);
+        Botom* b = new Botom(0,0,1,1);
+        if (use_variant) {
+            return new ColorVariant(b, level, "Botom");
+        }
+        return b;
     }
     else if (type == "FlyingFooga") {
-        return new FlyingFooga(speed, hits);
+        FlyingFooga* f = new FlyingFooga(0,0,1,0);
+        if (use_variant) {
+            return new ColorVariant(f, level, "FlyingFooga");
+        }
+        return f;
     }
-    else if (type == "Tornado") {
-        return new Tornado(speed, hits);
+    else  if (type == "Tornado") {
+        Tornado* t = new Tornado(0,0,1,0);
+        if (use_variant)
+        {
+            return new ColorVariant(t, level, "Tornado");
+        }
+        return t;
     }
-    else if (type == "Mogera") {
-        return new Mogera();
+    else   if (type == "Mogera") {
+        return new Mogera(400,300,200);
     }
     else if (type == "Gamakichi") {
-        return new Gamakichi();
+        return new Gamakichi(400,400,500);
     }
-    if (type == "Mogera_child") {
-        return new Mogera_child();
+    else if (type == "Mogera_child") {
+        return new Mogera_child(0, 0, 1, 0);
     }
-    else {
-        return nullptr;
-    }
+
+    // if unknown type to prevent memory leak
+    return nullptr;
 }
