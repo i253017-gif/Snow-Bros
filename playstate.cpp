@@ -1,57 +1,43 @@
 #include<SFML/Graphics.hpp>
-#include"player.h"
-#include"inputmanager.h"
+#include<iostream>
+#include"menustate.h"
+#include"playstate.h"
+//other states
 
-Player::Player()
+playState::playState(stateMachine* m)
 {
-	shape.setSize(sf::Vector2f(50,50));
-	shape.setFillColor(sf::Color::Green);
-	shape.setPosition(300, 300); //hard coding ts for now
-	//texture.loadFromFile()
-	//spriet.setTexture(texture);
-	//sprite.setPosition(shape.getPosition())   superimposes on top of hitbox
-	velocityX = 5.0f;  //5 frames per sec when key is pressed
-	velocityY = 0.0f;
-	gravity = 0.5f;
-	Jumpstrength = -10.0f; //negative to go up????
-	isOnGround = false;
+	machine = m;
 
+	//nikal dena=====================================================================
+	font.loadFromFile("arial.ttf");
+	text.setFont(font);
+	text.setString("PLAY STATE\nW = Jump | A/D = Move\nESC = Menu");
+	text.setCharacterSize(20);
+	text.setPosition(50, 20);
+	//============================================================================
 }
-void Player::handleInput(inputManager& input)
+void playState::handleInput(inputManager& input)
 {
-	if(input.isLeftPressed())
-		shape.move(-velocityX, 0); //move left
-	if(input.isRightPressed())
-		shape.move(velocityX, 0); //move right
-	if (input.isUpPressed())
-	{
-		velocityY = Jumpstrength;
-		isOnGround = false;  
-	}
+	if (input.isEscapePressed())
+		machine->changeState(new menuState(machine));
+	//pressing esp while playing will take us to menu
 
+	player.handleInput(input);
 }
-void Player::update()
+void playState::update()
 {
-	applyGravity();   //apply gravity every frame
-	shape.move(0, velocityY); //move vertically
-
-	// =========================
-  // TEMPORARY GROUND (REMOVE LATER)
-  // =========================
-	if (shape.getPosition().y >= 500) {
-		shape.setPosition(shape.getPosition().x, 500);
-		velocityY = 0;
-		isOnGround = true;
-	}
+	//actual game logic will come here
+	//std::cout << "For testing! Entered play state update function\n";
+	player.update();
 }
-sf::FloatRect Player::getBounds()
+void playState::render(sf::RenderWindow& window)
 {
-	return shape.getGlobalBounds();
+	//actual game rendering will come here
+	//std::cout << "For testing! Entered play state render function\n";
+	player.render(window);
+	window.draw(text);
 }
-void Player::render(sf::RenderWindow& window)
+playState:: ~playState()
 {
-	window.draw(shape);
-}
-void Player::applyGravity() {
-	velocityY += gravity;
+	// Empty is fine
 }
