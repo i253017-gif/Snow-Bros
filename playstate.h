@@ -3,6 +3,7 @@
 #include"gamestate.h"
 #include"statemachinee.h"
 #include"player.h"
+#include"snowball.h"
 
 class playState : public gameState
 {
@@ -13,6 +14,10 @@ private:
 	sf::Font font;
 	sf::Text text;
 	Player player;
+	Snowball snowball[100];
+	int SBnum;
+	bool wasSpacePressed;  //so only one snowball per key press
+
 
 public:
 	playState(stateMachine* m);
