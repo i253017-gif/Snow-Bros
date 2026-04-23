@@ -25,8 +25,8 @@ void Gameloop::run() {
 
 
         // 3. Player
-        player.handleInput(input);
-        player.update();
+       // player.handleInput(input);
+       // player.update();
 
 
         // 🔹 4. Let current state handle input + update
