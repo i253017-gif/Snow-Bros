@@ -10,25 +10,47 @@ Player::Player()
 	//texture.loadFromFile()
 	//spriet.setTexture(texture);
 	//sprite.setPosition(shape.getPosition())   superimposes on top of hitbox
-	velocityX = 5.0f;  //5 frames per sec when key is pressed
+	velocityX = 1.0f;  //5 frames per sec when key is pressed
 	velocityY = 0.0f;
-	gravity = 0.5f;
-	Jumpstrength = -10.0f; //negative to go up????
+	gravity = 0.2f;
+	Jumpstrength = -1.0f; //negative to go up????
 	isOnGround = false;
+	facingDirection = 1;     //start game by facing right
 
 }
 void Player::handleInput(inputManager& input)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+	if(input.isLeftPressed())
+	{ 
 		shape.move(-velocityX, 0); //move left
+		facingDirection = -1;
+	}
+	if(input.isRightPressed())
+	{
+		shape.move(velocityX, 0); //move right
+		facingDirection = 1;
+	 }
+		
+	if (input.isUpPressed())
+	{
+		velocityY = Jumpstrength;
+		isOnGround = false;  
+	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		shape.move(velocityX, 0);  //move right
+}
 
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::W) && isOnGround)
-		velocityY = Jumpstrength; 
-	isOnGround = false; //will true it later
+sf::FloatRect Player::getBounds()
+{
+	return shape.getGlobalBounds();
+}
 
+void Player::applyGravity() {
+	velocityY += gravity;
+}
+
+int Player:: getFacingDirection()		//for snowball
+{
+	return facingDirection;
 }
 void Player::update()
 {
@@ -43,4 +65,9 @@ void Player::update()
 		velocityY = 0;
 		isOnGround = true;
 	}
+}
+
+void Player::render(sf::RenderWindow& window)
+{
+	window.draw(shape);
 }
