@@ -1,15 +1,17 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "StateMachine.h"
-#include "InputManager.h"
+#include "inputmanager.h"
+#include "statemachinee.h"
+#include"player.h"
 
 
 class Gameloop
 {
 private:
 	sf::RenderWindow window;
-	StateMachine machine;
-	InputManager input;
+	stateMachine machine;
+	inputManager input;
+	Player player;
 public:
 	Gameloop();
 	void run();
