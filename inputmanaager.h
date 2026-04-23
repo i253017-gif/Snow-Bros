@@ -9,6 +9,7 @@ private:
 	bool left;
 	bool right;
 	bool up;
+	bool space; //snowball
 
 public:
 	bool isEnterPressed();
@@ -16,6 +17,7 @@ public:
 	bool isLeftPressed();
 	bool isRightPressed();
 	bool isUpPressed();
+	bool isSpacePressed();
 	void update();
 
 };
