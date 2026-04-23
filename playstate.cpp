@@ -1,31 +1,57 @@
 #include<SFML/Graphics.hpp>
-#include<iostream>
-#include"menustate.h"
-#include"playstate.h"
-//other states
+#include"player.h"
+#include"inputmanager.h"
 
-playState::playState(stateMachine* m)
+Player::Player()
 {
-	machine = m;
-}
-void playState::handleInput(inputManager& input)
-{
-	if (input.isEscapePressed())
-		machine->changeState(new menuState(machine));
-	//pressing esp while playing will take us to menu
+	shape.setSize(sf::Vector2f(50,50));
+	shape.setFillColor(sf::Color::Green);
+	shape.setPosition(300, 300); //hard coding ts for now
+	//texture.loadFromFile()
+	//spriet.setTexture(texture);
+	//sprite.setPosition(shape.getPosition())   superimposes on top of hitbox
+	velocityX = 5.0f;  //5 frames per sec when key is pressed
+	velocityY = 0.0f;
+	gravity = 0.5f;
+	Jumpstrength = -10.0f; //negative to go up????
+	isOnGround = false;
 
-	//other states
 }
-void playState::update()
+void Player::handleInput(inputManager& input)
 {
-	//actual game logic will come here
-	std::cout << "For testing! Entered play state update function\n";
+	if(input.isLeftPressed())
+		shape.move(-velocityX, 0); //move left
+	if(input.isRightPressed())
+		shape.move(velocityX, 0); //move right
+	if (input.isUpPressed())
+	{
+		velocityY = Jumpstrength;
+		isOnGround = false;  
+	}
+
 }
-void playState::render(sf::RenderWindow& window)
+void Player::update()
 {
-	//actual game rendering will come here
-	std::cout << "For testing! Entered play state render function\n";
+	applyGravity();   //apply gravity every frame
+	shape.move(0, velocityY); //move vertically
+
+	// =========================
+  // TEMPORARY GROUND (REMOVE LATER)
+  // =========================
+	if (shape.getPosition().y >= 500) {
+		shape.setPosition(shape.getPosition().x, 500);
+		velocityY = 0;
+		isOnGround = true;
+	}
 }
-playState::~playState()
+sf::FloatRect Player::getBounds()
 {
+	return shape.getGlobalBounds();
+}
+void Player::render(sf::RenderWindow& window)
+{
+	window.draw(shape);
+}
+void Player::applyGravity() {
+	velocityY += gravity;
 }
