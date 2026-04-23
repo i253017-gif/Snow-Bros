@@ -12,7 +12,8 @@ private:
 	float velocityY;
 	float gravity;
 	float Jumpstrength;
-	bool isOnGround; 			   //no double jump 
+	bool isOnGround; 	           //no double jump
+	int facingDirection; 
 public:
 	Player();
 
@@ -20,6 +21,7 @@ public:
 	void update();
 	void render(sf::RenderWindow& window);
 	void applyGravity();
+	int getFacingDirection();
 
 	sf::FloatRect getBounds(); //hitbox
 };
