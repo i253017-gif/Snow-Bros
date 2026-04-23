@@ -6,8 +6,8 @@ class Player
 {
 private:
 	sf::RectangleShape shape;      //player shape and like the hitbox shape as well
-	sf::Sprite sprite;             
-	sf::Texture texture;
+	//sf::Sprite sprite;             
+	//sf::Texture texture;
 	float velocityX;			   //per frame movement rate
 	float velocityY;
 	float gravity;
