@@ -1,7 +1,7 @@
 #pragma once
 #include"Enemy.h"
 class Mogera_child:public Enemy{ 
-	float dir_x, dir_y; //hor and vert dirctions
+	float dir_x, dir_y; // fixed movement direction (-1=left, 1=right)
 public:
 	Mogera_child(float x, float y, float dx, float dy);
 	~Mogera_child() {};
@@ -13,7 +13,7 @@ public:
 	float get_dir_x();
 	void set_dir_x(float x);
 	float get_dir_y();
-	void set_dir_y(int y);
+	void set_dir_y(float y);
 
 
 

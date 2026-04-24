@@ -1,14 +1,15 @@
 #include"Gamakichi.h"
-Gamakichi::Gamakichi(float x, float y, int hp) :Boss(x, y, 0, hp, 0) {
+Gamakichi::Gamakichi(float x, float y, int hp) :Boss(x, y,  hp, hp) { //hits sem as hp
 	if (tex.loadFromFile("assets/Gamakichi.png")) {
 		visual.setTexture(tex);
 	}
 	rocket_timer = 2.5f;
-	gem_reward = 450;
+	gem_reward = 500;
 }
 void Gamakichi::draw(sf::RenderWindow& window) {
 	visual.setPosition(pos_x, pos_y);
 	window.draw(visual);
+	show_health_bar(window);
 }
 void Gamakichi::move(float delta_time){}
 void Gamakichi::update(float delta_time){}

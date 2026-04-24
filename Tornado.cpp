@@ -1,5 +1,5 @@
 #include"Tornado.h"
-Tornado::Tornado(float speed_mult, int extra_hits):FlyingFooga(speed_mult, extra_hits) {
+Tornado::Tornado(float x, float y, float speed_mult, int extra_hits):FlyingFooga(x,y,speed_mult, extra_hits) {
     if (tex.loadFromFile("assets/FlyingFooga_red.png")) {
         visual.setTexture(tex);
     }

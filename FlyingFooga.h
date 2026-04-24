@@ -5,7 +5,7 @@ protected:
 	bool  flying;         
 	float fly_timer;
 public:
-	FlyingFooga(float speed_mult, int extra_hits);
+	FlyingFooga(float x, float y,float speed_mult, int extra_hits);
 
 
 	void draw(sf::RenderWindow& window) override;

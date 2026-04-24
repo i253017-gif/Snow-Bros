@@ -1,5 +1,5 @@
 #include"Boss.h"
-Boss::Boss(float x, float y,float s, int hp, int hits) :Enemy(x, y, s, hp, hits) {
+Boss::Boss(float x, float y, int hp, int hits) :Enemy(x, y, 0, hp, hits) {
 	boss_hp = hp;
 	attack_phase = 1;
 }

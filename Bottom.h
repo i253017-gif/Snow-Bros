@@ -2,7 +2,7 @@
 #include "Enemy.h"
 class Botom :public Enemy {
 	public:
-	Botom(float speed_mult, int extra_hits);
+	Botom(float x, float y,float speed_mult, int extra_hits);
 	
 	
 	void draw(sf::RenderWindow& window) override;

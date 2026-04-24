@@ -1,10 +1,12 @@
 #include"FlyingFooga.h"
-FlyingFooga::FlyingFooga(float speed_mult, int extra_hits) :Botom(speed_mult, extra_hits) {
+FlyingFooga::FlyingFooga(float x, float y, float speed_mult, int extra_hits) :Botom(x, y,speed_mult, extra_hits) {
     if (tex.loadFromFile("assets/FlyingFooga_red.png")) {
         visual.setTexture(tex);
     }
 
 
+    flying = false;
+    fly_timer = 2.5f;
 
 }
 
@@ -13,8 +15,6 @@ void FlyingFooga::draw(sf::RenderWindow& window) {
     visual.setPosition(pos_x, pos_y);
     window.draw(visual);
 
-    this->flying = false;      
-    this->fly_timer = 2.5f;    
 
 }
 

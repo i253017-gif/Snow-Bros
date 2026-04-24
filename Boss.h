@@ -18,7 +18,7 @@ protected:
 	hp drops*/
 
 public:
-	Boss(float x, float y,float s, int hp, int hits);
+	Boss(float x, float y, int hp, int hits);
 
 	//ALL THESE PURE VIRTUAL CZ WE WONT CALL THIS DIRECTLY
 	//WE WILL CALL CHILD CLASSES WHICH WILL OVERRIDE THESE
@@ -38,7 +38,7 @@ public:
 	void set_boss_hp(int hp);
 	void set_attack_phase(int phase);
 
-	~Boss();
+	virtual~Boss();
 
 
 
