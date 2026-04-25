@@ -9,23 +9,37 @@
 playState::playState(stateMachine* m)
 {
 	machine = m;
-
-	//nikal dena=====================================================================
-	font.loadFromFile("arial.ttf");
-	text.setFont(font);
-	text.setString("PLAY STATE\nW = Jump | A/D = Move\nESC = Menu");
-	text.setCharacterSize(20);
-	text.setPosition(50, 20);
-	//============================================================================
-
 	SBnum = 0; 
 	wasSpacePressed = false;
+	Pnum = 0;
+
+	loadLevel(1);
 }
+
+void playState::loadLevel(int levelNum)
+{
+	if (levelNum == 1)
+	{
+		platform[Pnum++] = Platform(150, 100, 350, 30);
+		platform[Pnum++] = Platform(50, 300, 200, 30);
+		platform[Pnum++] = Platform(400, 300, 200, 30);
+		platform[Pnum++] = Platform(140, 480, 370, 30);
+	}
+	else if (levelNum == 2)
+	{
+		platform[Pnum++] = Platform(100, 500, 300, 30);
+		platform[Pnum++] = Platform(250, 450, 150, 20);
+		platform[Pnum++] = Platform(450, 350, 150, 20);
+		platform[Pnum++] = Platform(200, 250, 150, 20);
+	}
+}
+
 void playState::handleInput(inputManager& input)
 {
 	if (input.isEscapePressed())
 		machine->changeState(new menuState(machine));
 	//pressing esp while playing will take us to menu
+
 
 	if (input.isSpacePressed() && SBnum<100 && !wasSpacePressed)
 	{											//!wasSpacePressed makes sure last press wasnt a space
@@ -46,6 +60,39 @@ void playState::handleInput(inputManager& input)
 	player.handleInput(input);
 
 
+	player.setOnGround(false);  // Reset
+
+	for (int i = 0; i < Pnum; i++)
+	{
+		sf::FloatRect playerBounds = player.getBounds();
+		sf::FloatRect platformBounds = platform[i].getBounds();
+
+		if (playerBounds.intersects(platformBounds))
+		{
+			if (player.getVelocity() > 0)
+			{
+				player.newPosition(playerBounds.left,
+					platformBounds.top - playerBounds.height);
+				player.setVelocity(0);
+				player.setOnGround(true);
+			}
+		}
+	}
+
+	// ===== SCREEN BOUNDARIES (KEEP PLAYER IN) =====
+	sf::FloatRect playerBounds = player.getBounds();
+
+	// Left boundary
+	if (playerBounds.left < 0)
+		player.newPosition(0, playerBounds.top);
+
+	// Right boundary
+	if (playerBounds.left + playerBounds.width > 700)
+		player.newPosition(700 - playerBounds.width, playerBounds.top);
+
+	// Bottom boundary - just push player back up
+	if (playerBounds.top > 700)
+		player.newPosition(playerBounds.left, 700 - playerBounds.height);
 }
 void playState::update()
 {
@@ -71,6 +118,10 @@ void playState::update()
 	
 void playState::render(sf::RenderWindow& window)
 {
+	for(int i=0; i<Pnum; i++)
+		platform[i].render(window);
+
+
 	player.render(window);
 
 	window.draw(text);
