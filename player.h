@@ -14,6 +14,7 @@ private:
 	float Jumpstrength;
 	bool isOnGround; 	           //no double jump
 	int facingDirection; 
+	bool wasSpacePressed;
 public:
 	Player();
 
@@ -22,6 +23,12 @@ public:
 	void render(sf::RenderWindow& window);
 	void applyGravity();
 	int getFacingDirection();
+
+	float getVelocity();
+	void setVelocity(float v);
+	void newPosition(float x, float y);
+
+	void setOnGround(bool onGround);
 
 	sf::FloatRect getBounds(); //hitbox
 };
