@@ -6,16 +6,17 @@ Player::Player()
 {
 	shape.setSize(sf::Vector2f(50,50));
 	shape.setFillColor(sf::Color::Green);
-	shape.setPosition(300, 300); //hard coding ts for now
+	shape.setPosition(300, 600); //hard coding ts for now
 	//texture.loadFromFile()
 	//spriet.setTexture(texture);
 	//sprite.setPosition(shape.getPosition())   superimposes on top of hitbox
-	velocityX = 1.0f;  //5 frames per sec when key is pressed
+	velocityX = 0.5f;  //5 frames per sec when key is pressed
 	velocityY = 0.0f;
-	gravity = 0.2f;
-	Jumpstrength = -1.0f; //negative to go up????
+	gravity = 0.05f;
+	Jumpstrength = -5.0f; //negative to go up????
 	isOnGround = false;
 	facingDirection = 1;     //start game by facing right
+	wasSpacePressed = false;
 
 }
 void Player::handleInput(inputManager& input)
@@ -31,11 +32,14 @@ void Player::handleInput(inputManager& input)
 		facingDirection = 1;
 	 }
 		
-	if (input.isUpPressed())
+	if (input.isUpPressed() && !wasSpacePressed)
 	{
 		velocityY = Jumpstrength;
-		isOnGround = false;  
+		isOnGround = false;
+		wasSpacePressed = true;
 	}
+	else if (!input.isUpPressed())
+		wasSpacePressed = false;
 
 }
 
@@ -52,16 +56,37 @@ int Player:: getFacingDirection()		//for snowball
 {
 	return facingDirection;
 }
+
+float Player::getVelocity()
+{
+	return velocityY;  // Returns current falling speed
+}
+
+void Player::setVelocity(float v)
+{
+	velocityY = v;   // Set falling speed (0 = stop falling)
+}
+
+void Player::newPosition(float x, float y)
+{
+	shape.setPosition(x, y);    // Move the circle hitbox
+	//sprite.setPosition(x, y);   // Move the visual sprite too
+}
+
+void Player::setOnGround(bool onGround)
+{
+	isOnGround = onGround;
+}
 void Player::update()
 {
 	applyGravity();   //apply gravity every frame
 	shape.move(0, velocityY); //move vertically
 
 	// =========================
-  // TEMPORARY GROUND (REMOVE LATER)
+  // GROUND
   // =========================
-	if (shape.getPosition().y >= 500) {
-		shape.setPosition(shape.getPosition().x, 500);
+	if (shape.getPosition().y >= 550) {
+		shape.setPosition(shape.getPosition().x, 550);
 		velocityY = 0;
 		isOnGround = true;
 	}
