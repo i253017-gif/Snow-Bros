@@ -4,6 +4,7 @@
 #include"statemachinee.h"
 #include"player.h"
 #include"snowball.h"
+#include"platform.h"
 
 class playState : public gameState
 {
@@ -17,6 +18,9 @@ private:
 	Snowball snowball[100];
 	int SBnum;
 	bool wasSpacePressed;  //so only one snowball per key press
+	Platform platform[50];
+	int Pnum;
+
 
 
 public:
@@ -25,6 +29,7 @@ public:
 	void update();
 	void render(sf::RenderWindow& window);
 	~playState();
+	void loadLevel(int levelNum);
 
 
 	//actual game logic will come here
