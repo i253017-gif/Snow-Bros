@@ -4,35 +4,32 @@
 
 //constructo initialization
 
-PowerUp::PowerUp(float x, float y, float dur) {
+PowerUp::PowerUp(float x, float y) {
 	pos_x = x;
-	pos_x = y;
-	duration = dur;
+	pos_y = y;
+
 }
 
 //SETTERS AND GETTERS
 
 
 float PowerUp::get_pos_x() {
-	return pos_x; 
+	return pos_x;
 }
 float PowerUp::get_pos_y() {
-	return pos_y; 
-}
-float PowerUp::get_duration() {
-	return duration;
-}
-hit_box PowerUp::get_hit_box() { 
-	return hitbox; 
+	return pos_y;
 }
 
-void PowerUp::set_pos_x(float x) { 
+hit_box PowerUp::get_hit_box() {
+	return hitbox;
+}
+
+void PowerUp::set_pos_x(float x) {
 	pos_x = x;
 }
 void PowerUp::set_pos_y(float y) {
 	pos_y = y;
 }
-void PowerUp::set_duration(float dur) {
-		duration = dur;
-	}
 
+
+PowerUp::~PowerUp() {}

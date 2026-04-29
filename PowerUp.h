@@ -7,16 +7,17 @@ class player;
 class PowerUp {
 protected:
     //positions
-    float   pos_x,  pos_y;    
+    float   pos_x, pos_y;
     //duration the effect is gonna stau for
-    float   duration;  
+    float   duration;
     hit_box hitbox;
-
+    sf::Texture tex;
+    sf::Sprite  visual;
 
 public:
 
     //constructor
-    PowerUp(float x, float y, float dur);
+    PowerUp(float x, float y);
     ~PowerUp();
     //pure virtual funcs which make the class abstract
 
@@ -26,14 +27,14 @@ public:
 
     //GETTERS AND SETTERS
 
-   
-   
+
+
     void set_pos_x(float x);
     void set_pos_y(float y);
-    void set_duration(float dur);
-  
+    
+
     float   get_pos_x();
     float   get_pos_y();
-    float   get_duration();
+    
     hit_box get_hit_box();
 };
