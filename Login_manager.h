@@ -3,22 +3,18 @@
 #include <fstream>
 #include <sstream>
 #include <ctime>
-
-// ============================================================
-// Login_manager.h
-// Handles login, registration, password hashing
-// Written by: Ishmal (Student B)
-// Spec ref: Section 10.1
-// ============================================================
-
+using namespace std;
 class Login_manager {
 private:
     std::string current_user;
-    bool        logged_in;
-
-    // custom hash - your formula
+    bool logged_in;
+    const char separator = ';';
+    // password hashing function(implemented by myself)
     std::string hash_password(std::string password) {
-        if (password.empty()) return "0";
+        if (password.empty())
+        {
+            return "0";
+        }
         int result = (int)password[0];
         int total = result;
         for (int i = 1; i < (int)password.length(); i++) {
@@ -27,23 +23,30 @@ private:
         }
         return std::to_string(total);
     }
-
-    // checks if username already in users.txt
+  // used to check if username already exists in users.txt
     bool username_exists(std::string username) {
         std::ifstream file("users.txt");
         std::string line;
         while (std::getline(file, line)) {
             std::stringstream ss(line);
-            std::string uid, uname;
-            std::getline(ss, uid, '|');
-            std::getline(ss, uname, '|');
-            if (uname == username) return true;
+            std::string user_id, user_name;
+            std::getline(ss, user_id, separator);
+            std::getline(ss, user_name, separator);
+            if (user_name == user_name) {
+                return true;
+            }
         }
         return false;
     }
 
     std::string generate_user_id() {
-        return std::to_string((long long)std::time(nullptr));
+        std::ifstream file("users.txt");
+        std::string line;
+        int count = 0;
+ while (std::getline(file, line)) {
+            count++;
+        }
+return std::to_string(count + 1);
     }
 
 public:
@@ -56,11 +59,11 @@ public:
         std::string line;
         while (std::getline(file, line)) {
             std::stringstream ss(line);
-            std::string uid, uname, phash;
-            std::getline(ss, uid, '|');
-            std::getline(ss, uname, '|');
-            std::getline(ss, phash, '|');
-            if (uname == username && phash == hashed) {
+            std::string user_id, user_name, p_hash;
+            std::getline(ss, user_id, separator);
+            std::getline(ss, user_name, separator);
+            std::getline(ss, p_hash, separator);
+            if (user_name == username && p_hash == hashed) {
                 current_user = username;
                 logged_in = true;
                 return true;
@@ -71,13 +74,12 @@ public:
 
     // registers new user - returns true if success
     bool register_user(std::string username, std::string password, std::string email) {
-        if (username_exists(username)) return false;
+        if (username_exists(username)) {
+            return false;
+        }
         std::ofstream file("users.txt", std::ios::app);
-        file << generate_user_id() << "|"
-            << username << "|"
-            << hash_password(password) << "|"
-            << email << "|"
-            << generate_user_id() << "\n";
+        file << generate_user_id() << separator << username << separator  << hash_password(password) << separator<< email << separator
+            << generate_user_id() << endl;
         current_user = username;
         logged_in = true;
         return true;
@@ -88,6 +90,10 @@ public:
         logged_in = false;
     }
 
-    std::string get_current_user() { return current_user; }
-    bool        get_logged_in() { return logged_in; }
+    std::string get_current_user() { 
+        return current_user; 
+    }
+    bool        get_logged_in() {
+        return logged_in;
+    }
 };
