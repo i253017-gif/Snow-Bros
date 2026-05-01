@@ -5,6 +5,8 @@
 #include"player.h"
 #include"snowball.h"
 #include"platform.h"
+#include"Botom.h"
+#include"Enemy.h"
 
 class playState : public gameState
 {
@@ -15,11 +17,14 @@ private:
 	sf::Font font;
 	sf::Text text;
 	Player player;
-	Snowball snowball[100];
+	Snowball snowball[500];
 	int SBnum;
 	bool wasSpacePressed;  //so only one snowball per key press
 	Platform platform[50];
 	int Pnum;
+	Enemy* enemies[200];
+	int Enum;
+
 
 
 
