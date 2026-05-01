@@ -20,9 +20,6 @@ float PowerUp::get_pos_y() {
 	return pos_y;
 }
 
-hit_box PowerUp::get_hit_box() {
-	return hitbox;
-}
 
 void PowerUp::set_pos_x(float x) {
 	pos_x = x;

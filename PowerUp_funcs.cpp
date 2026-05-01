@@ -1,7 +1,8 @@
 #include"PowerUp_funcs.h"
-PowerUp_funcs::PowerUp_funcs(std::string type, float x, float y) :PowerUp(x,y ){
+#include"player.h"
+PowerUp_funcs::PowerUp_funcs(std::string type, float x, float y) :PowerUp(x, y) {
     powerup_type = type;
-//setting how long theeffect will last
+    //setting how long theeffect will last
     if (type == "speed") {
         timer = 15.0f;
     }
@@ -24,11 +25,11 @@ PowerUp_funcs::PowerUp_funcs(std::string type, float x, float y) :PowerUp(x,y ){
         image = "images/snowpower.png";
     }
     else if (type == "distance") {
-        image= "images/distance.png";
+        image = "images/distance.png";
     }
     else if (type == "balloon") {
         image = "images/balloon.png";
-    } 
+    }
     if (tex.loadFromFile(image)) {
         visual.setTexture(tex);
         float scale = 30.f / tex.getSize().x;
@@ -36,7 +37,7 @@ PowerUp_funcs::PowerUp_funcs(std::string type, float x, float y) :PowerUp(x,y ){
     }
 }
 
-void PowerUp_funcs::apply(player& p) {
+void PowerUp_funcs::apply(Player& p) {
     if (powerup_type == "speed") {
         apply_speed(p);
     }
@@ -52,33 +53,33 @@ void PowerUp_funcs::apply(player& p) {
 }
 
 
-void PowerUp_funcs::apply_speed(player& p) { 
-    p.set_speed(p.get_speed() * 1.5f); 
+void PowerUp_funcs::apply_speed(Player& p) {
+    p.set_speed(p.get_speed() * 1.5f);
 }
-void PowerUp_funcs::apply_snowball(player& p) { 
-     p.set_snowball_power(true); 
+void PowerUp_funcs::apply_snowball(Player& p) {
+    p.set_snowball_power(true);
 }
-void PowerUp_funcs::apply_distance(player& p) { 
+void PowerUp_funcs::apply_distance(Player& p) {
     original_distance = p.get_snowball_distance();
-    p.set_snowball_distance(700.f); 
+    p.set_snowball_distance(700.f);
 }
-void PowerUp_funcs::apply_balloon(player& p) { 
-    p.set_balloon_mode(true); 
+void PowerUp_funcs::apply_balloon(Player& p) {
+    p.set_balloon_mode(true);
 }
 
 
-void PowerUp_funcs::expire(player& p)  {
-    if (powerup_type == "speed") { 
-        p.set_speed(p.get_speed() / 1.5f); 
+void PowerUp_funcs::expire(Player& p) {
+    if (powerup_type == "speed") {
+        p.set_speed(p.get_speed() / 1.5f);
     }
     if (powerup_type == "snowball") {
-        p.set_snowball_power(false); 
+        p.set_snowball_power(false);
     }
-    if (powerup_type == "distance") { 
-        p.set_snowball_distance(original_distance); 
+    if (powerup_type == "distance") {
+        p.set_snowball_distance(original_distance);
     }
-    if (powerup_type == "balloon") { 
-        p.set_balloon_mode(false); 
+    if (powerup_type == "balloon") {
+        p.set_balloon_mode(false);
     }
 }
 
@@ -96,10 +97,10 @@ void PowerUp_funcs::draw(sf::RenderWindow& window) {
 
 
 // Getters
-std::string PowerUp_funcs::get_powerup_type() { 
+std::string PowerUp_funcs::get_powerup_type() {
     return powerup_type;
 }
-float   PowerUp_funcs::get_timer() { 
+float   PowerUp_funcs::get_timer() {
     return timer;
 }
 
