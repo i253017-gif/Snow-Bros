@@ -69,6 +69,10 @@ void playState::handleInput(inputManager& input)
 			startX += player.getBounds().width;
 		float startY = player.getBounds().top + player.getBounds().height / 2;
 		
+
+
+		///////=============ISHMAL ADDEDDDDDD THISSSS====================//////////////////
+
 		// use player's snowball distance and power for snowball creation
 		float sb_speed = player.get_snowball_power() ? 10.0f : 5.0f;
 		float sb_range = player.get_snowball_distance();
