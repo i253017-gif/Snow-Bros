@@ -2,6 +2,7 @@
 #include"player.h"
 #include"inputmanager.h"
 
+
 Player::Player()
 {
 	shape.setSize(sf::Vector2f(50,50));
