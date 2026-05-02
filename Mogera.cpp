@@ -1,5 +1,7 @@
 #include"Mogera.h"
-Mogera::Mogera(float x, float y, int hp) :Boss(x, y, hp, hp) { //hits sem as hp
+Mogera::Mogera(float x, float y, int hp) :Boss(x, y, hp, hp)
+{ //hits sem as hp
+	type = MOGERA;
 	shape.setSize(sf::Vector2f(50, 50));
 	shape.setFillColor(sf::Color::Red);
 	shape.setPosition(x, y);
