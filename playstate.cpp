@@ -53,18 +53,95 @@ void playState::loadLevel(int levelNum)
 		enemies[Enum++] = new Botom(400, 200, 1.2f, 0);
 		enemies[Enum++] = new Botom(200, 250, 0.8f, 1);
 	}
-	else if (levelNum == 2)
-	{
-		platform[Pnum++] = Platform(100, 500, 300, 30);
-		platform[Pnum++] = Platform(250, 450, 150, 20);
-		platform[Pnum++] = Platform(450, 350, 150, 20);
-		platform[Pnum++] = Platform(200, 250, 150, 20);
+else if (levelNum == 2)
+{
+	platform[Pnum++] = Platform(0, 600, 700, 30);      // Bottom
+	platform[Pnum++] = Platform(0, 400, 150, 30);      // Left
+	platform[Pnum++] = Platform(275, 400, 150, 30);    // Center
+	platform[Pnum++] = Platform(550, 400, 150, 30);    // Right
+	platform[Pnum++] = Platform(150, 200, 150, 30);    // Upper left
+	platform[Pnum++] = Platform(400, 200, 150, 30);    // Upper right
 
-		enemies[Enum++] = new Botom(250, 200, 1.0f, 0);
-		enemies[Enum++] = new Botom(350, 150, 1.3f, 1);
-		enemies[Enum++] = new Botom(150, 250, 0.9f, 0);
-		enemies[Enum++] = new Botom(450, 100, 1.1f, 1);
-	}
+	/*enemies[Enum++] = new FlyingFooga(250, 200, 1.0f, 0);
+	enemies[Enum++] = new FlyingFooga(350, 150, 1.3f, 1);
+	enemies[Enum++] = new FlyingFooga(150, 250, 0.9f, 0);*/
+	enemies[Enum++] = new Botom(300, 150, 1.0f, 0);
+}
+else if (levelNum == 3)
+{
+	platform[Pnum++] = Platform(0, 600, 700, 30);      // Bottom
+	platform[Pnum++] = Platform(0, 500, 120, 30);      // Left column 1
+	platform[Pnum++] = Platform(150, 500, 120, 30);    // Left column 2
+	platform[Pnum++] = Platform(290, 450, 120, 30);    // Center
+	platform[Pnum++] = Platform(430, 500, 120, 30);    // Right column 1
+	platform[Pnum++] = Platform(580, 500, 120, 30);    // Right column 2
+
+	/*enemies[Enum++] = new Tornado(200, 350, 1.0f, 0);
+	enemies[Enum++] = new Tornado(400, 350, 1.2f, 1);
+	enemies[Enum++] = new Tornado(300, 250, 0.8f, 0);*/
+	enemies[Enum++] = new Botom(300, 150, 1.0f, 0);
+}
+else if (levelNum == 4)
+{
+	platform[Pnum++] = Platform(0, 600, 700, 30);      // Bottom
+	platform[Pnum++] = Platform(50, 350, 200, 30);     // Left
+	platform[Pnum++] = Platform(250, 400, 200, 30);    // Center-left
+	platform[Pnum++] = Platform(450, 400, 200, 30);    // Center-right
+	platform[Pnum++] = Platform(600, 350, 100, 30);    // Right
+	enemies[Enum++] = new Botom(300, 150, 1.0f, 0);
+}
+else if (levelNum == 5)
+{
+	platform[Pnum++] = Platform(0, 600, 700, 30);      // Bottom
+	platform[Pnum++] = Platform(100, 400, 150, 30);    // Left platform
+	platform[Pnum++] = Platform(450, 400, 150, 30);    // Right platform
+	enemies[Enum++] = new Botom(300, 150, 1.0f, 0);
+}
+else if (levelNum == 6)
+{
+	platform[Pnum++] = Platform(0, 600, 700, 30);      // Bottom
+	platform[Pnum++] = Platform(50, 480, 130, 30);     // Left step 1
+	platform[Pnum++] = Platform(200, 380, 130, 30);    // Left step 2
+	platform[Pnum++] = Platform(350, 280, 130, 30);    // Center
+	platform[Pnum++] = Platform(500, 380, 130, 30);    // Right step 2
+	platform[Pnum++] = Platform(620, 480, 80, 30);     // Right step 1
+	enemies[Enum++] = new Botom(300, 150, 1.0f, 0);
+}
+else if (levelNum == 7)
+{
+	platform[Pnum++] = Platform(0, 600, 700, 30);      // Bottom
+	platform[Pnum++] = Platform(100, 450, 150, 30);    // Left
+	platform[Pnum++] = Platform(275, 350, 150, 30);    // Center
+	platform[Pnum++] = Platform(450, 450, 150, 30);    // Right
+	platform[Pnum++] = Platform(200, 200, 300, 30);    // Top platform
+	enemies[Enum++] = new Botom(300, 150, 1.0f, 0);
+}
+else if (levelNum == 8)
+{
+	platform[Pnum++] = Platform(0, 600, 700, 30);      // Bottom
+	platform[Pnum++] = Platform(50, 500, 100, 30);     // Left lower
+	platform[Pnum++] = Platform(150, 400, 100, 30);    // Left middle
+	platform[Pnum++] = Platform(275, 300, 150, 30);    // Center
+	platform[Pnum++] = Platform(500, 400, 100, 30);    // Right middle
+	platform[Pnum++] = Platform(600, 500, 100, 30);    // Right lower
+	enemies[Enum++] = new Botom(300, 150, 1.0f, 0);
+}
+else if (levelNum == 9)
+{
+	platform[Pnum++] = Platform(0, 600, 700, 30);      // Bottom
+	platform[Pnum++] = Platform(75, 450, 120, 30);     // Left
+	platform[Pnum++] = Platform(290, 400, 120, 30);    // Center-left
+	platform[Pnum++] = Platform(510, 400, 120, 30);    // Center-right
+	platform[Pnum++] = Platform(600, 450, 100, 30);    // Right
+	enemies[Enum++] = new Botom(300, 150, 1.0f, 0);
+}
+else if (levelNum == 10)
+{
+	platform[Pnum++] = Platform(0, 600, 700, 30);      // Bottom
+	platform[Pnum++] = Platform(100, 400, 150, 30);    // Left platform
+	platform[Pnum++] = Platform(450, 400, 150, 30);    // Right platform
+	enemies[Enum++] = new Botom(300, 150, 1.0f, 0);
+}
 }
 
 void playState::handleInput(inputManager& input)
