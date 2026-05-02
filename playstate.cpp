@@ -25,7 +25,6 @@ playState::playState(stateMachine* m)
 	Pnum = 0;
 	Enum = 0;
 	projectile_count = 0;;
-	powerup_count = 0;
 
 	lives = 2;
 	score = 0;
@@ -40,7 +39,6 @@ void playState::loadLevel(int levelNum)
 	Pnum = 0;
 	SBnum = 0;
 	projectile_count = 0;
-	powerup_count = 0;
 	levelTransitioning = false;
 	levelTransitionTimer = 0.0f;
 	if (levelNum == 1)
@@ -336,23 +334,7 @@ void playState::update()
 				gamachiki->set_rocket_timer(0.0f);
 			}
 		}
-		// POWERUPS
-		updatePowerUps(0.016f);
-
-		// CHECK FOR POWER-UP COLLECTION - ADD THIS HERE
-		checkPowerUpCollisions();
-
-		// Check for power-up expiration and remove expired ones
-		for (int i = 0; i < powerup_count; i++)
-		{
-			if (powerups[i]->get_timer() <= 0 && powerups[i]->get_powerup_type() != "snowball" && powerups[i]->get_powerup_type() != "distance")
-			{
-				// Effect has expired, remove it
-				powerups[i]->expire(player);
-				removePowerUp(i);
-				i--;
-			}
-		}
+		
 		//check bounds again to make sure it doesnt move out of frame after update
 		for (int e = 0; e < Enum; e++)
 		{
@@ -402,7 +384,7 @@ void playState::update()
 					pointsEarned = 50 + rand() % 51;
 
 				player.addScore(pointsEarned);
-				spawnPowerUp(enemies[i]->get_pos_x(), enemies[i]->get_pos_y());
+
 				delete enemies[i];
 			}
 		}
@@ -470,8 +452,7 @@ void playState::render(sf::RenderWindow& window)
 	for (int i = 0; i < projectile_count; i++)
 		projectile[i]->draw(window);
 
-	for (int i = 0; i < powerup_count; i++)
-		powerups[i]->draw(window);
+	
 
 	renderGems(window);
 	hud.draw(window);
@@ -481,70 +462,6 @@ playState:: ~playState()
 	// Empty is fine
 }
 
-void playState::spawnPowerUp(float x, float y)
-{
-	// Array of possible power-up types
-	std::string powerup_types[] = { "speed", "snowball", "distance", "balloon" };
-
-	// Randomly select a power-up type
-	int random_type = rand() % 4;
-	std::string selected_type = powerup_types[random_type];
-
-	// Spawn the power-up if we have space
-	if (powerup_count < 50)
-	{
-		powerups[powerup_count++] = new PowerUp_funcs(selected_type, x, y);
-	}
-}
-
-void playState::updatePowerUps(float delta_time)
-{
-	for (int i = 0; i < powerup_count; i++)
-	{
-		powerups[i]->update(delta_time);
-	}
-}
-
-void playState::checkPowerUpCollisions()
-{
-	sf::FloatRect playerBounds = player.getBounds();
-
-	for (int i = 0; i < powerup_count; i++)
-	{
-		sf::FloatRect powerupBounds(
-			powerups[i]->get_pos_x(),
-			powerups[i]->get_pos_y(),
-			30.0f,  // Approximate size based on visual scale
-			30.0f
-		);
-
-		if (playerBounds.intersects(powerupBounds))
-		{
-			// Apply the power-up effect to the player
-			powerups[i]->apply(player);
-
-			// Remove the collected power-up
-			removePowerUp(i);
-			i--;  // Adjust index after removal
-		}
-	}
-}
-
-void playState::removePowerUp(int index)
-{
-	if (index >= 0 && index < powerup_count)
-	{
-		delete powerups[index];
-		powerups[index] = nullptr;
-
-		// Shift remaining power-ups
-		for (int i = index; i < powerup_count - 1; i++)
-		{
-			powerups[i] = powerups[i + 1];
-		}
-		powerup_count--;
-	}
-}
 
 
 int playState::getScore()
