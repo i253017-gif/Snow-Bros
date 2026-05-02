@@ -91,7 +91,7 @@ void playState::loadLevel(int levelNum)
 	}
 	else if (levelNum == 2)
 	{
-		platform[Pnum++] = Platform(0, 600, 700, 30);      // Bottom
+		platform[Pnum++] = Platform(0, 500, 700, 30);      // Bottom
 		platform[Pnum++] = Platform(0, 400, 150, 30);      // Left
 		platform[Pnum++] = Platform(275, 400, 150, 30);    // Center
 		platform[Pnum++] = Platform(550, 400, 150, 30);    // Right
@@ -102,7 +102,7 @@ void playState::loadLevel(int levelNum)
 	}
 	else if (levelNum == 3)
 	{
-		platform[Pnum++] = Platform(0, 600, 700, 30);      // Bottom
+		platform[Pnum++] = Platform(0, 520, 700, 30);      // Bottom
 		platform[Pnum++] = Platform(0, 500, 120, 30);      // Left column 1
 		platform[Pnum++] = Platform(150, 500, 120, 30);    // Left column 2
 		platform[Pnum++] = Platform(290, 450, 120, 30);    // Center
@@ -114,23 +114,23 @@ void playState::loadLevel(int levelNum)
 	}
 	else if (levelNum == 4)
 	{
-		platform[Pnum++] = Platform(0, 600, 700, 30);      // Bottom
+		platform[Pnum++] = Platform(0, 520, 700, 30);      // Bottom
 		platform[Pnum++] = Platform(50, 350, 200, 30);     // Left
-		platform[Pnum++] = Platform(250, 400, 200, 30);    // Center-left
-		platform[Pnum++] = Platform(450, 400, 200, 30);    // Center-right
+		//platform[Pnum++] = Platform(250, 400, 200, 30);    // Center-left
+		//platform[Pnum++] = Platform(450, 400, 200, 30);    // Center-right
 		platform[Pnum++] = Platform(600, 350, 100, 30);    // Right
 		enemies[Enum++] = new Botom(300, 150, 1.0f, 0);
 	}
 	else if (levelNum == 5)
 	{
-		platform[Pnum++] = Platform(0, 600, 700, 30);      // Bottom
+		platform[Pnum++] = Platform(0, 520, 700, 30);      // Bottom
 		platform[Pnum++] = Platform(100, 400, 150, 30);    // Left platform
 		platform[Pnum++] = Platform(450, 400, 150, 30);    // Right platform
 		enemies[Enum++] = new Botom(300, 150, 1.0f, 0);
 	}
 	else if (levelNum == 6)
 	{
-		platform[Pnum++] = Platform(0, 600, 700, 30);      // Bottom
+		platform[Pnum++] = Platform(0, 520, 700, 30);      // Bottom
 		platform[Pnum++] = Platform(50, 480, 130, 30);     // Left step 1
 		platform[Pnum++] = Platform(200, 380, 130, 30);    // Left step 2
 		platform[Pnum++] = Platform(350, 280, 130, 30);    // Center
@@ -140,7 +140,7 @@ void playState::loadLevel(int levelNum)
 	}
 	else if (levelNum == 7)
 	{
-		platform[Pnum++] = Platform(0, 600, 700, 30);      // Bottom
+		platform[Pnum++] = Platform(0, 520, 700, 30);      // Bottom
 		platform[Pnum++] = Platform(100, 450, 150, 30);    // Left
 		platform[Pnum++] = Platform(275, 350, 150, 30);    // Center
 		platform[Pnum++] = Platform(450, 450, 150, 30);    // Right
@@ -149,7 +149,7 @@ void playState::loadLevel(int levelNum)
 	}
 	else if (levelNum == 8)
 	{
-		platform[Pnum++] = Platform(0, 600, 700, 30);      // Bottom
+		platform[Pnum++] = Platform(0, 520, 700, 30);      // Bottom
 		platform[Pnum++] = Platform(50, 500, 100, 30);     // Left lower
 		platform[Pnum++] = Platform(150, 400, 100, 30);    // Left middle
 		platform[Pnum++] = Platform(275, 300, 150, 30);    // Center
@@ -159,7 +159,7 @@ void playState::loadLevel(int levelNum)
 	}
 	else if (levelNum == 9)
 	{
-		platform[Pnum++] = Platform(0, 600, 700, 30);      // Bottom
+		platform[Pnum++] = Platform(0, 520, 700, 30);      // Bottom
 		platform[Pnum++] = Platform(75, 450, 120, 30);     // Left
 		platform[Pnum++] = Platform(290, 400, 120, 30);    // Center-left
 		platform[Pnum++] = Platform(510, 400, 120, 30);    // Center-right
@@ -168,7 +168,7 @@ void playState::loadLevel(int levelNum)
 	}
 	else if (levelNum == 10)
 	{
-		platform[Pnum++] = Platform(0, 600, 700, 30);      // Bottom
+		platform[Pnum++] = Platform(0, 520, 700, 30);      // Bottom
 		platform[Pnum++] = Platform(100, 400, 150, 30);    // Left platform
 		platform[Pnum++] = Platform(450, 400, 150, 30);    // Right platform
 		enemies[Enum++] = new Botom(300, 150, 1.0f, 0);
@@ -306,18 +306,46 @@ void playState::handleInput(inputManager& input)
 			enemies[e]->newPosition(700 - enemyBounds.width, enemyBounds.top);
 	}
 
-	//Snowball and enemy collision
+
+	//SNOWBALL CLEANUP FIRST FOR MEMORY
+	//removing dead snowballs from array to clean up space
+	int writePos = 0;
+	for (int i = 0; i < SBnum; i++)
+	{
+		if (snowball[i].getActivity())
+		{
+			snowball[writePos] = snowball[i];
+			writePos++;
+		}
+	}
+	SBnum = writePos;
+
+	//Snowball and enemy collision=================================
 	for (int e = 0; e < Enum; e++)
 	{
 		sf::FloatRect enemyBounds = enemies[e]->getBounds();
 
 		for (int s = 0; s < SBnum; s++)
 		{
+			// ADDED: skip if snowball is already a frozen enemy
+			if (snowball[s].isFrozen())
+			{
+				// Frozen snowball kills regular enemies on contact
+				EnemyType frozenType = (EnemyType)snowball[s].getFrozenEnemyType();
+				if (frozenType != MOGERA && frozenType != GAMAKICHI &&
+					enemyBounds.intersects(snowball[s].getBounds()))
+				{
+					enemies[e]->take_damage(999); // One shot kill
+				}
+				continue;
+			}
+
 			sf::FloatRect snowballBounds = snowball[s].getBounds();
 
 			if (enemyBounds.intersects(snowballBounds))
 			{
 				enemies[e]->take_damage(1);
+				EnemyType enemyType = enemies[e]->getEnemyType();
 
 				// ADDED: snowball power makes encase in 1 hit
 				// Check if any player has snowball power active
@@ -336,17 +364,31 @@ void playState::handleInput(inputManager& input)
 				else
 					enemies[e]->apply_snow_hit(1);
 
+				// ADDED: if enemy dies and is not a boss, chance to turn into rolling snowball
+				if (enemies[e]->get_hp() <= 0 && enemyType != MOGERA && enemyType != GAMAKICHI)
+				{
+					// ADDED: 50% chance to turn into rolling snowball
+					int roll = rand() % 100;
+					if (roll < 50)
+					{
+						// Turn snowball into rolling enemy snowball
+						snowball[s].freezeEnemy(enemyType,
+							enemies[e]->getBounds().left,
+							enemies[e]->getBounds().top);
+						continue; // Snowball keeps moving, don't set inactive
+					}
+				}
+
 				snowball[s].setInactive();
 			}
 		}
 	}
-
 	// Update projectiles
 	for (int i = 0; i < projectile_count; i++)
 		projectile[i]->update(0.016f);
 
 	// Remove inactive projectiles
-	int writePos = 0;
+	writePos = 0;
 	for (int i = 0; i < projectile_count; i++)
 	{
 		if (projectile[i]->get_is_moving())
@@ -388,25 +430,16 @@ void playState::update()
 	for (int i = 0; i < SBnum; i++)
 		snowball[i].update();
 
-	//removing dead snowballs from array to clean up space
-	int writePos = 0;
-	for (int i = 0; i < SBnum; i++)
-	{
-		if (snowball[i].getActivity())
-		{
-			snowball[writePos] = snowball[i];
-			writePos++;
-		}
-	}
-	SBnum = writePos;
-
+	
 
 	//=====================================
 	for (int i = 0; i < Enum; i++)
+{
+	// Only process if it's actually a Tornado
+	if (enemies[i]->get_type() == "Tornado")
 	{
 		Tornado* tornado = (Tornado*)enemies[i];
 
-		// Send position of closest player to the tornado
 		float closestDist = 999999;
 		int closestPlayer = 0;
 
@@ -424,8 +457,8 @@ void playState::update()
 			players[closestPlayer].getBounds().top);
 	}
 
-	for (int i = 0; i < Enum; i++)
-		enemies[i]->update(0.016f);
+	enemies[i]->update(0.016f);
+}
 
 	//===================== ADDED: power-up pickup + timer =====================
 // Collect drops (stays on screen until collected)
@@ -490,25 +523,25 @@ void playState::update()
 		else
 		{
 			int pointsEarned = 0;
-			std::string enemyType = enemies[i]->get_type();
+			EnemyType enemyType = enemies[i]->getEnemyType();
 
-			if (enemyType == "Botom")
+			if (enemyType == BOTOM)
 				pointsEarned = 100 + rand() % 401;
-			else if (enemyType == "FlyingFooga")
+			else if (enemyType == FLYING_FOOGA)
 				pointsEarned = 200 + rand() % 601;
-			else if (enemyType == "Tornado")
+			else if (enemyType == TORNADO)
 				pointsEarned = 300 + rand() % 901;
-			else if (enemyType == "Mogera")
+			else if (enemyType == MOGERA)
 			{
 				pointsEarned = 5000;
 				spawnGemRain(200, false);
 			}
-			else if (enemyType == "Gamakichi")
+			else if (enemyType == GAMAKICHI)
 			{
 				pointsEarned = 10000;
 				spawnGemRain(500, false);
 			}
-			else if (enemyType == "Mogera_child")
+			else if (enemyType == MOGERA_CHILD)
 				pointsEarned = 50 + rand() % 51;
 
 
@@ -540,7 +573,7 @@ void playState::update()
 	// Level 4 & 9: cash rain when all enemies dead====================
 	if ((level == 4 || level == 9) && Enum == 0 && gemCount == 0 && !levelTransitioning)
 	{
-		spawnGemRain(50, true);
+		spawnGemRain(10, true);
 	}
 
 	updateGems(0.016f);
@@ -647,14 +680,14 @@ int playState::getScore()
 	return score;
 }
 
-// --- rest of file unchanged (gem rain, HUD, getLevel/setLevel) ---
+//GEM RAIN==================
 void playState::spawnGemRain(int amount, bool isCash)
 {
 	gemCount = 0;
 	isCashRain = isCash;
 
 	if (isCash)
-		cashTimer = 10.0f;
+		cashTimer = 30.0f;
 
 	for (int i = 0; i < amount && gemCount < MAX_GEMS; i++)
 	{
@@ -675,10 +708,10 @@ void playState::updateGems(float deltaTime)
 	{
 		if (!gemCollected[i])
 		{
-			gemVelocity[i] += 0.2f;
+			gemVelocity[i] += 0.05f;
 			gemY[i] += gemVelocity[i];
 
-			if (gemY[i] > 650)
+			if (gemY[i] >= 650)
 				gemY[i] = 650;
 		}
 	}
