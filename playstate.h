@@ -32,8 +32,6 @@ private:
 	artillery_rocket* projectile[500];  
 	int projectile_count;
 
-	PowerUp_funcs* powerups[50];
-	int powerup_count;
 
 	int lives;
 	int score;
@@ -63,11 +61,6 @@ public:
 	void render(sf::RenderWindow& window);
 	~playState();
 	void loadLevel(int levelNum);
-
-	void spawnPowerUp(float x, float y);
-	void updatePowerUps(float delta_time);
-	void checkPowerUpCollisions();
-	void removePowerUp(int index);
 
 	int getScore();
 
