@@ -1,6 +1,6 @@
 #include"FlyingFooga.h"
 FlyingFooga::FlyingFooga(float x, float y, float speed_mult, int extra_hits) :Botom(x, y, speed_mult, extra_hits) {
-   
+    type = FLYING_FOOGA;
     shape.setSize(sf::Vector2f(25, 25));
     shape.setFillColor(sf::Color::Red);
     shape.setPosition(x, y);
@@ -20,7 +20,7 @@ FlyingFooga::FlyingFooga(float x, float y, float speed_mult, int extra_hits) :Bo
     currentTime = 0.0f;
     directionX = (rand() % 3) - 1;     //-1,0,1
     directionY = (rand() % 3) - 1;
-	flySpeed = 20.0 * speed_mult;
+	flySpeed = 20.0f * speed_mult;
 
 }
 
@@ -101,7 +101,7 @@ FlyingFooga::~FlyingFooga() {}
 
 
 //GETTERS AND SETTERS
-/*void FlyingFooga::set_flying(bool state) {
+void FlyingFooga::set_flying(bool state) {
     flying = state;
 }
 void FlyingFooga::set_fly_timer(float time) {
@@ -114,7 +114,7 @@ bool FlyingFooga::get_flying() {
 }
 float FlyingFooga::get_fly_timer() {
     return fly_timer;
-}*/
+}
 
 
 sf::FloatRect FlyingFooga::getBounds() {
