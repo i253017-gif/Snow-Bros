@@ -1,54 +1,47 @@
 #pragma once
-
-#include <SFML/Graphics.hpp>
-  
+#include"Enemy.h"
 
 
-class Enemy {
+//MAKING AN ABSTRAT CLASS FOR ALL THE BOSS ENEMIES
+//ALL THE BOSS INHERIT FROM THIS AND THIS INHERITS FROM ENEMY
+//WE ARE MAKING THIS CZ BOSSES HAVE SOME FIMILAR FEATURES
+
+
+
+
+
+class Boss :public Enemy {
 protected:
-	sf::RectangleShape shape;
-	sf::Sprite visual;
-	sf::Texture text;
-	//enemy positions
-	float pos_x;
-	float pos_y;
-	//enemy speed
-	float speed;
-	int hp; //remaining health
-	int snow_hits_needed;//hits needed for the enemy to get encased in snow
-	bool encased; //whether the enemy if cpvered with snow yet or not
-	bool isOnGround;
-	float velocityY;
-	
+	int boss_hp, attack_phase;
+	/*boss hp is basically he max hp of boss which is diff than other enemies
+	and attack phase is the current level of how boss attacks as it changed as
+	hp drops*/
+
 public:
-	Enemy(float hor, float vert, float s, int health, int hit);
-	virtual ~Enemy();
+	Boss(float x, float y, int hp, int hits);
 
-	//pure virtual funcs which make the class abstract
+	//ALL THESE PURE VIRTUAL CZ WE WONT CALL THIS DIRECTLY
+	//WE WILL CALL CHILD CLASSES WHICH WILL OVERRIDE THESE
 
-	virtual void update(float delta_time) = 0;
 	virtual void draw(sf::RenderWindow& window) = 0;
 	virtual void move(float delta_time) = 0;
-	virtual sf::FloatRect getBounds() = 0; //hitbox
-	virtual std::string get_type() const = 0;
-	//enemyneeds to be daMAGED MORE if its hp isnt 0 and if its 0 it dies
-	void take_damage(int amount);
-
-	//GETTERS AND SETTERS 
-	float get_pos_x();
-	float  get_pos_y();
-	int   get_hp();
-	float get_speed();
-	bool  get_encased();
-
-	void set_pos_x(float x);
-	void set_pos_y(float y);
-	void set_speed(float spd);
-	void set_encased(bool state);
+	virtual void update(float time) = 0;
+	sf::FloatRect getBounds() = 0;
 
 
-	void setOnGround(bool onGround);
-	float getVelocity();
-	void setVelocity(float v);
-	void newPosition(float x, float y);
+	//non virtual cz all bosses have sem exact health bars
+
+	void show_health_bar(sf::RenderWindow& window);
+
+	//getters and setter
+	int get_boss_hp();
+	int get_attack_phase();
+	void set_boss_hp(int hp);
+	void set_attack_phase(int phase);
+
+	virtual~Boss();
+
+
+
+
 };
