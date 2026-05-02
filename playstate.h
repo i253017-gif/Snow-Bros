@@ -11,6 +11,7 @@
 #include"artillery_rocket.h"
 #include"PowerUp.h"
 #include"PowerUp_funcs.h"
+#include"HUD_manager.h"
 
 class playState : public gameState
 {
@@ -49,8 +50,8 @@ private:
 	int gemCount = 0;
 	float cashTimer = 0.0f;
 	bool isCashRain = false;
-	//LOAD HUD LATER
-	//
+	
+	HUD_manager hud;
 public:
 	playState(stateMachine* m);
 	void handleInput(inputManager& input);
