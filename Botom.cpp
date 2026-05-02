@@ -87,3 +87,8 @@ Botom::Botom() : Enemy(0, 0, 10.0f, 1, 1) {
     directionChange = 5.0f + (rand() % 14);
     directionTimer = 0.0f;
 }
+
+std::string Botom::get_type() const
+{
+    return "Botom";
+}
