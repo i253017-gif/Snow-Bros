@@ -19,7 +19,7 @@ public:
 	void move(float delta_time) override;
 	void update(float time) override;
 	 sf::FloatRect getBounds() override;
-
+	std::string get_type() const override;
 	
 
 	
