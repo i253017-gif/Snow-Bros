@@ -252,6 +252,13 @@ void playState::handleInput(inputManager& input)
 				sf::FloatRect enemyBounds = enemies[i]->getBounds();
 				if (playerBounds.intersects(enemyBounds))
 				{
+					// ADDED: balloon mode grants immunity against ground enemies (Botom)
+					if (players[p].isBalloonModeActive())
+					{
+						Botom* botom = dynamic_cast<Botom*>(enemies[i]);
+						if (botom != nullptr)
+							continue;  // immune to Botom while balloon mode active
+					}
 					players[p].loseLive();
 					break; // Only lose one life per frame, even if colliding with multiple enemies
 				}
@@ -404,7 +411,10 @@ void playState::update()
 	//=====================================
 	for (int i = 0; i < Enum; i++)
 	{
-		Tornado* tornado = (Tornado*)enemies[i];
+		// FIXED: use dynamic_cast so non-Tornado enemies are skipped safely
+		Tornado* tornado = dynamic_cast<Tornado*>(enemies[i]);
+		if (!tornado)
+			continue;
 
 		// Send position of closest player to the tornado
 		float closestDist = 999999;

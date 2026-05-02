@@ -13,11 +13,18 @@ Enemy::Enemy(float hor, float vert, float s, int health, int hit) {
 	encased = false;
 }
 void Enemy::take_damage(int amount) {
+	// Only reduces HP; snow encasing is tracked separately via apply_snow_hit
 	hp = hp - amount;
-	snow_hits_needed = snow_hits_needed - amount;
-	if (snow_hits_needed <= 0) {
+}
+
+std::string Enemy::get_type() const {
+	return "Enemy";
+}
+
+void Enemy::apply_snow_hit(int amount) {
+	snow_hits_needed -= amount;
+	if (snow_hits_needed <= 0)
 		encased = true;
-	}
 }
 
 //GETTERS

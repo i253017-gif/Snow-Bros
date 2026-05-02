@@ -10,6 +10,7 @@ private:
 	its a pointer because gamestates are created at runtime on heap*/
 
 public:
+	stateMachine();
 	void changeState(gameState* newState);
 	void handleInput(inputManager& input);	
 	void update();

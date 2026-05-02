@@ -123,7 +123,21 @@ void Player::setOnGround(bool onGround)
 
 void Player::update()
 {
-	applyGravity();   //apply gravity every frame
+	// ADDED: balloon mode – apply reduced gravity (floaty feel); full gravity otherwise
+	if (balloon_mode_active)
+	{
+		// Slow descent: cap falling speed and apply minimal gravity
+		if (velocityY < 0.f)
+			velocityY += 0.02f;  // slow rise decay
+		else if (velocityY > 1.5f)
+			velocityY = 1.5f;    // cap falling speed
+		else
+			velocityY += 0.01f;  // very gentle downward pull
+	}
+	else
+	{
+		applyGravity();   //apply gravity every frame
+	}
 	shape.move(0, velocityY); //move vertically
 
 	if (invincibilityTime > 0.0f)
@@ -141,6 +155,14 @@ void Player::update()
 
 void Player::render(sf::RenderWindow& window)
 {
+	// ADDED: change player colour to indicate active power-ups
+	if (balloon_mode_active)
+		shape.setFillColor(sf::Color::Cyan);
+	else if (snowball_power_active)
+		shape.setFillColor(sf::Color(200, 200, 255));  // light blue
+	else
+		shape.setFillColor(sf::Color::Green);
+
 	if (isInvincible())
 	{
 		if (fmod(invincibilityTime, 0.2f) < 0.1f)

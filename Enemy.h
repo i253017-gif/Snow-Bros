@@ -1,9 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-  
-
-
+#include <string>
 class Enemy {
 protected:
 	sf::RectangleShape shape;
@@ -32,6 +30,11 @@ public:
 	virtual sf::FloatRect getBounds() = 0; //hitbox
 	//enemyneeds to be daMAGED MORE if its hp isnt 0 and if its 0 it dies
 	void take_damage(int amount);
+
+	// Virtual type identifier – overridden by each enemy subclass
+	virtual std::string get_type() const;
+	// Separate snow-hit tracking from HP damage (SnowballPower uses this)
+	virtual void apply_snow_hit(int amount);
 
 	//GETTERS AND SETTERS 
 	float get_pos_x();
