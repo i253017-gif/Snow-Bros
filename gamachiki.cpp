@@ -1,6 +1,8 @@
 #include"Gamachiki.h"
 
-Gamakichi::Gamakichi(float x, float y, int hp) :Boss(x, y, hp, hp) {
+Gamakichi::Gamakichi(float x, float y, int hp) :Boss(x, y, hp, hp)
+{
+	type = GAMAKICHI;
 	shape.setSize(sf::Vector2f(50, 50));
 	shape.setFillColor(sf::Color::Red);
 	shape.setPosition(x, y);
