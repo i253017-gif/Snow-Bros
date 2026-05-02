@@ -35,6 +35,14 @@ playState::playState(stateMachine* m)
 
 void playState::loadLevel(int levelNum)
 {
+
+	Enum = 0;
+	Pnum = 0;
+	SBnum = 0;
+	projectile_count = 0;
+	powerup_count = 0;
+	levelTransitioning = false;
+	levelTransitionTimer = 0.0f;
 	if (levelNum == 1)
 	{
 		platform[Pnum++] = Platform(0, 100, 350, 30);
@@ -400,8 +408,8 @@ void playState::update()
 		}
 		Enum = enemyWritePos;
 
-		// Level 4 & 9: cash rain when all enemies dead
-		if ((level == 4 || level == 9) && Enum == 0 && gemCount == 0)
+		// Level 4 & 9: cash rain when all enemies dead====================
+		if ((level == 4 || level == 9) && Enum == 0 && gemCount == 0 && !levelTransitioning)
 		{
 			spawnGemRain(50, true);
 		}
@@ -409,7 +417,37 @@ void playState::update()
 		updateGems(0.016f);
 		checkGemCollisions();
 
-		// Update HUD with current game state=========================================================
+		// Check if all enemies are dead and no gem rain is active
+		if (Enum == 0 && gemCount == 0 && !levelTransitioning)
+		{
+			levelTransitioning = true;
+			levelTransitionTimer = 10.0f;
+			nextLevel = level + 1;
+		}
+
+		// Handle level transition
+		if (levelTransitioning)
+		{
+			levelTransitionTimer -= 0.016f;
+			if (levelTransitionTimer <= 0)
+			{
+				// Load next level
+				if (nextLevel <= 10)
+				{
+					level = nextLevel;
+					loadLevel(level);
+					levelTransitioning = false;
+					levelTransitionTimer = 0.0f;
+				}
+				else
+				{
+					// Game complete - go to menu
+					machine->changeState(new menuState(machine));
+				}
+			}
+		}
+
+		// Update HUD with current game state=======================================
 		hud.update_values(player.getScore(), player.getLives(), player.getGems(), level, "", 0, false, 0, 1);
 	}
 
@@ -435,6 +473,7 @@ void playState::render(sf::RenderWindow& window)
 	for (int i = 0; i < powerup_count; i++)
 		powerups[i]->draw(window);
 
+	renderGems(window);
 	hud.draw(window);
 }
 playState:: ~playState()
