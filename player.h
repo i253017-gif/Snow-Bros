@@ -6,14 +6,12 @@ class Player
 {
 private:
 	sf::RectangleShape shape;      //player shape and like the hitbox shape as well
-	//sf::Sprite sprite;             
-	//sf::Texture texture;
 	float velocityX;			   //per frame movement rate
 	float velocityY;
 	float gravity;
 	float Jumpstrength;
 	bool isOnGround; 	           //no double jump
-	int facingDirection; 
+	int facingDirection;
 	bool wasSpacePressed;
 
 	int lives;
@@ -29,7 +27,7 @@ private:
 public:
 	Player();
 
-	void handleInput(inputManager& input);
+	void handleInput(inputManager& input, int p);
 	void update();
 	void render(sf::RenderWindow& window);
 	void applyGravity();
@@ -43,7 +41,6 @@ public:
 
 	sf::FloatRect getBounds(); //hitbox
 
-
 	int getLives();
 	void loseLive();
 	void resetToStart();    //after death
@@ -53,12 +50,14 @@ public:
 	void addGems(int amount);
 	int getGems();
 
-
 	void set_speed(float speed);
 	float get_speed();
 	void set_snowball_power(bool active);
 	void set_snowball_distance(float distance);
 	float get_snowball_distance();
 	void set_balloon_mode(bool active);
-	
+
+	// ADDED: getters needed by playState
+	bool isSnowballPowerActive() const;
+	bool isBalloonModeActive() const;
 };
