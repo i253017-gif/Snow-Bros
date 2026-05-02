@@ -12,6 +12,7 @@
 #include"PowerUp.h"
 #include"PowerUp_funcs.h"
 #include"HUD_manager.h"
+#include "Star.h" // ADDED
 
 class playState : public gameState
 {
@@ -21,17 +22,18 @@ private:
 	//=====================
 	sf::Font font;
 	sf::Text text;
-	Player player;
-	Snowball snowball[500];
+	Player players[2];
+	int playerCount;
+	bool multiplayer;
+	Snowball snowball[1000];
 	int SBnum;
 	bool wasSpacePressed;  //so only one snowball per key press
-	Platform platform[50];
+	Platform platform[100];
 	int Pnum;
 	Enemy* enemies[500];
 	int Enum;
-	artillery_rocket* projectile[500];  
+	artillery_rocket* projectile[500];
 	int projectile_count;
-
 
 	int lives;
 	int score;
@@ -42,7 +44,7 @@ private:
 	float levelTransitionTimer = 0.0f;
 	bool levelTransitioning = false;
 	int nextLevel = 1;
-	
+
 	//================GEM RAIN 
 	static const int MAX_GEMS = 100;
 	float gemX[MAX_GEMS];
@@ -52,8 +54,20 @@ private:
 	int gemCount = 0;
 	float cashTimer = 0.0f;
 	bool isCashRain = false;
-	
+
 	HUD_manager hud;
+
+	// ================= ADDED: POWER-UP SYSTEM =================
+	static const int MAX_DROPS = 50;
+	PowerUp_funcs* drops[MAX_DROPS];
+	int dropCount;
+	PowerUp_funcs* activePowerUp[2];  // Array for multiplayer
+
+	// ================= ADDED: STAR EVENT =================
+	StarEvent starEvent;
+	int starLevel;
+	bool wasMousePressed;
+
 public:
 	playState(stateMachine* m);
 	void handleInput(inputManager& input);
@@ -64,7 +78,6 @@ public:
 
 	int getScore();
 
-
 	int getLevel();
 	void setLevel(int lv);
 
@@ -72,4 +85,6 @@ public:
 	void updateGems(float deltaTime);
 	void checkGemCollisions();
 	void renderGems(sf::RenderWindow& window);
+
+	bool setMultiplayer(bool multiplayer);
 };
