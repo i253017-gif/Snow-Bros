@@ -387,7 +387,7 @@ void playState::update()
 				delete activePowerUp[p];
 				activePowerUp[p] = nullptr;
 			}
-			activePowerUp[p] = new PowerUp_funcs(chosen, 0, 0, true); // timer = -1
+			activePowerUp[p] = new PowerUp_funcs(chosen, 0, 0, true); // fromStar=true: lasts until level end
 			activePowerUp[p]->apply(players[p]);
 		}
 	}

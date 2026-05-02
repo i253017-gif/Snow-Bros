@@ -82,5 +82,5 @@ sf::FloatRect Mogera_child::getBounds()
 
 std::string Mogera_child::get_type() const
 {
-	return "Mogera Child";
+	return "Mogera_child";
 }

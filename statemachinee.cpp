@@ -8,7 +8,7 @@ stateMachine::stateMachine()
 void stateMachine::changeState(gameState* newState)
 {
 	if (currentState != nullptr)
-		currentState = nullptr;
+		delete currentState;
 	currentState = newState;
 }
 void stateMachine::handleInput(inputManager& input)
