@@ -1,6 +1,6 @@
 #include"Mogera_child.h"
 Mogera_child::Mogera_child(float x, float y, float dx, float dy) :Enemy(x, y, 75.0f, 1, 1) {
-
+	type = MOGERA_CHILD;
 	shape.setSize(sf::Vector2f(30, 30));
 	shape.setFillColor(sf::Color::Red);
 	shape.setPosition(x, y);
