@@ -1,7 +1,7 @@
 #include"Botom.h"
 
 Botom::Botom(float x, float y, float speed_mult, int extra_hits) :Enemy(x, y, 10.0f * speed_mult, 1, 1 + extra_hits) {
-    
+    type = BOTOM;
     shape.setSize(sf::Vector2f(25, 25));
     shape.setFillColor(sf::Color::Red);
     shape.setPosition(x, y);
