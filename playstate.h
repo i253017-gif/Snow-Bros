@@ -44,6 +44,8 @@ private:
 	float levelTransitionTimer = 0.0f;
 	bool levelTransitioning = false;
 	int nextLevel = 1;
+	sf::Texture texture;
+	sf::Sprite sprite;
 
 	//================GEM RAIN 
 	static const int MAX_GEMS = 100;
