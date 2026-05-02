@@ -1,83 +1,54 @@
+#pragma once
 
-#include "Enemy.h"  
-
-/////PURE VIRTUAL FUNCTIONS WONT BE DEFINED IN THIS CLASS THEY WILL BE DEFINED IN THE CHILD CLASSES
-
-//construction initialization
-Enemy::Enemy(float hor, float vert, float s, int health, int hit) {
-	pos_x = hor;
-	pos_y = vert;
-	speed = s;
-	hp = health;
-	snow_hits_needed = hit;
-	encased = false;
-}
-void Enemy::take_damage(int amount) {
-	hp = hp - amount;
-	snow_hits_needed = snow_hits_needed - amount;
-	if (snow_hits_needed <= 0) {
-		encased = true;
-	}
-}
-
-//GETTERS
-float Enemy::get_pos_x()
-{
-	return pos_x;
-}
-
-float Enemy::get_pos_y() {
-	return pos_y;
-}
-int  Enemy::get_hp() {
-	return hp;
-}
-float Enemy::get_speed() {
-	return speed;
-}
-bool Enemy::get_encased()
-{
-	return encased;
-}
-
-//SETTERS
-//int Enemy::get_snow_hits_needed() {
-	//return snow_hits_needed;
-//}
-
-//void Enemy::set_snow_hits_needed(int hits) {
-	//snow_hits_needed = hits;
-//}
-void Enemy::set_pos_x(float x) {
-	pos_x = x;
-}
-void Enemy::set_pos_y(float y) {
-	pos_y = y;
-}
-void Enemy::set_speed(float s) {
-	speed = s;
-}
-void Enemy::set_encased(bool state) {
-	encased = state;
-}
+#include <SFML/Graphics.hpp>
+  
 
 
+class Enemy {
+protected:
+	sf::RectangleShape shape;
+	sf::Sprite visual;
+	sf::Texture text;
+	//enemy positions
+	float pos_x;
+	float pos_y;
+	//enemy speed
+	float speed;
+	int hp; //remaining health
+	int snow_hits_needed;//hits needed for the enemy to get encased in snow
+	bool encased; //whether the enemy if cpvered with snow yet or not
+	bool isOnGround;
+	float velocityY;
+	
+public:
+	Enemy(float hor, float vert, float s, int health, int hit);
+	virtual ~Enemy();
 
-Enemy::~Enemy() {
-}
+	//pure virtual funcs which make the class abstract
 
-void Enemy::setOnGround(bool ground) {
-	isOnGround = ground;
-}
-void Enemy::setVelocity(float v) {
-	velocityY = v;
-}
+	virtual void update(float delta_time) = 0;
+	virtual void draw(sf::RenderWindow& window) = 0;
+	virtual void move(float delta_time) = 0;
+	virtual sf::FloatRect getBounds() = 0; //hitbox
+	virtual std::string get_type() const = 0;
+	//enemyneeds to be daMAGED MORE if its hp isnt 0 and if its 0 it dies
+	void take_damage(int amount);
 
-float Enemy::getVelocity() {
-	return velocityY;
-}
+	//GETTERS AND SETTERS 
+	float get_pos_x();
+	float  get_pos_y();
+	int   get_hp();
+	float get_speed();
+	bool  get_encased();
 
-void Enemy::newPosition(float x, float y) {
-	shape.setPosition(x, y);
-	visual.setPosition(shape.getPosition());
-}
+	void set_pos_x(float x);
+	void set_pos_y(float y);
+	void set_speed(float spd);
+	void set_encased(bool state);
+
+
+	void setOnGround(bool onGround);
+	float getVelocity();
+	void setVelocity(float v);
+	void newPosition(float x, float y);
+};
