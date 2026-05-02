@@ -20,7 +20,7 @@ private:
 
 public:
 	Snowball();
-	Snowball(float startX, float startY, float direction, float speed=5.0f, float range=500.0f);
+	Snowball(float startX, float startY, float direction, float speed = 5.0f, float range = 500.0f);
 
 
 	void update();
