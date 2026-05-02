@@ -1,7 +1,7 @@
 #include<SFML/Graphics.hpp>
 #include"player.h"
 #include"inputmanager.h"
-
+#include<cmath>
 
 Player::Player()
 {
@@ -18,6 +18,11 @@ Player::Player()
 	isOnGround = false;
 	facingDirection = 1;     //start game by facing right
 	wasSpacePressed = false;
+
+	lives = 2;
+	score = 0;
+	invincibilityTime = 0.0f;
+	
 
 }
 void Player::handleInput(inputManager& input)
@@ -83,6 +88,9 @@ void Player::update()
 	applyGravity();   //apply gravity every frame
 	shape.move(0, velocityY); //move vertically
 
+
+	if (invincibilityTime > 0.0f)
+		invincibilityTime -= 0.016f;
 	// =========================
   // GROUND
   // =========================
@@ -95,5 +103,87 @@ void Player::update()
 
 void Player::render(sf::RenderWindow& window)
 {
-	window.draw(shape);
+
+	if (isInvincible())
+	{
+		if (fmod(invincibilityTime, 0.2f)<0.1f)
+		{
+			window.draw(shape);
+		}
+	}
+	else
+	{
+		window.draw(shape);
+	}
+}
+
+int Player::getLives()
+{
+	return lives;
+}
+
+void Player::loseLive()
+{
+	lives--;
+	resetToStart();
+	invincibilityTime = 20.0f;
+}
+
+void Player::resetToStart()
+{
+	shape.setPosition(300, 600);
+	//sprite.setPosition(shape.getPosition());
+	isOnGround = false;
+}
+
+bool Player::isInvincible()
+{
+	return (invincibilityTime > 0.0f);
+}
+
+void Player::addScore(int points)
+{
+	score += points;
+}
+
+int Player::getScore() 
+{
+	return score;
+}
+
+void Player::set_speed(float speed) {
+	velocityX = speed;
+}
+
+float Player::get_speed() {
+	return velocityX;
+}
+
+void Player::set_snowball_power(bool active) {
+	// You need a member variable: bool snowball_power_active;
+	snowball_power_active = active;
+}
+
+void Player::set_snowball_distance(float distance) {
+	// You need a member variable: float snowball_distance;
+	snowball_distance = distance;
+}
+
+float Player::get_snowball_distance() {
+	return snowball_distance;
+}
+
+void Player::set_balloon_mode(bool active) {
+	// You need a member variable: bool balloon_mode_active;
+	balloon_mode_active = active;
+}
+
+void Player::addGems(int amount)
+{
+	gem += amount;
+}
+
+int Player::getGems() 
+{
+	return gem;
 }
