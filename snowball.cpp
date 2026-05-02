@@ -16,7 +16,7 @@ Snowball::Snowball(float startX, float startY, float direction, float speed, flo
 	sprite.setScale(0.5f, 0.5f);
 
 	velocityY = 0.0f;
-	velocityX = direction * 2.0f; 
+	velocityX = direction * 2.0f;
 	gravity = 0.05f;
 	isActive = true;
 	distanceTraveled = 0.0f;
