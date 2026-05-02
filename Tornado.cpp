@@ -1,7 +1,9 @@
 #include"Tornado.h"
 #include"knife.h"
 
-Tornado::Tornado(float x, float y, float speed_mult, int extra_hits) :FlyingFooga(x, y, speed_mult, extra_hits) {
+Tornado::Tornado(float x, float y, float speed_mult, int extra_hits) :FlyingFooga(x, y, speed_mult, extra_hits)
+{
+	type = TORNADO;
 	shape.setSize(sf::Vector2f(25, 25));
 	shape.setFillColor(sf::Color::Red);
 	shape.setPosition(x, y);
