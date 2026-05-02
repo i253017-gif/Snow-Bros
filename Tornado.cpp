@@ -98,3 +98,12 @@ Tornado::~Tornado()
 	for (int i = 0; i < knifeNum; i++)
 		delete knives[i];
 }
+
+std::string Tornado::get_type() const 
+{
+	return "Tornado";
+}
+
+sf::FloatRect Tornado::getBounds() {
+	return shape.getGlobalBounds();
+}
