@@ -120,3 +120,8 @@ float FlyingFooga::get_fly_timer() {
 sf::FloatRect FlyingFooga::getBounds() {
     return shape.getGlobalBounds();
 }
+
+std::string FlyingFooga::get_type() const 
+{
+    return "FlyingFooga";
+}
