@@ -409,6 +409,8 @@ void playState::update()
 		updateGems(0.016f);
 		checkGemCollisions();
 
+		// Update HUD with current game state=========================================================
+		hud.update_values(player.getScore(), player.getLives(), player.getGems(), level, "", 0, false, 0, 1);
 	}
 
 	
@@ -432,6 +434,8 @@ void playState::render(sf::RenderWindow& window)
 
 	for (int i = 0; i < powerup_count; i++)
 		powerups[i]->draw(window);
+
+	hud.draw(window);
 }
 playState:: ~playState()
 {
