@@ -45,6 +45,7 @@ playState::playState(stateMachine* m)
 	multiplayer = false;
 
 	loadLevel(level);
+
 }
 
 void playState::loadLevel(int levelNum)
@@ -71,6 +72,7 @@ void playState::loadLevel(int levelNum)
 	projectile_count = 0;
 	levelTransitioning = false;
 	levelTransitionTimer = 0.0f;
+	players[0].newPosition(100, 100);
 
 	// ADDED: spawn star only on chosen level
 	if (levelNum == starLevel)
@@ -82,96 +84,150 @@ void playState::loadLevel(int levelNum)
 	{
 		platform[Pnum++] = Platform(0, 100, 350, 30);
 		platform[Pnum++] = Platform(0, 300, 200, 30);
-		platform[Pnum++] = Platform(400, 300, 200, 30);
+		platform[Pnum++] = Platform(400, 300, 400, 30);
 		platform[Pnum++] = Platform(140, 480, 370, 30);
 
-		enemies[Enum++] = new Botom(300, 150, 1.0f, 0);
-		enemies[Enum++] = new Botom(400, 200, 1.2f, 0);
-		enemies[Enum++] = new Botom(200, 250, 0.8f, 1);
+		enemies[Enum++] = new Botom(300, 550, 1.5f, 0);
+		enemies[Enum++] = new Botom(400, 200, 1.2f, 2);
+		enemies[Enum++] = new Botom(500, 200, 1.0f, 0);
+
+		texture.loadFromFile("C:\\Users\\abiha\\OneDrive\\Desktop\\repos\\SFML_VS_Setup_2026\\SFML_VS_Setup_2026\\x64\\Debug\\SnowBrosAssets\\Images\\lvl1_2.jpeg");
+		sprite.setTexture(texture);
+		sprite.setPosition(0, 0);
+		sprite.setScale(700.0f / texture.getSize().x, 700.0f / texture.getSize().y);
 	}
 	else if (levelNum == 2)
 	{
-		platform[Pnum++] = Platform(0, 500, 700, 30);      // Bottom
-		platform[Pnum++] = Platform(0, 400, 150, 30);      // Left
-		platform[Pnum++] = Platform(275, 400, 150, 30);    // Center
-		platform[Pnum++] = Platform(550, 400, 150, 30);    // Right
-		platform[Pnum++] = Platform(150, 200, 150, 30);    // Upper left
-		platform[Pnum++] = Platform(400, 200, 150, 30);    // Upper right
+		platform[Pnum++] = Platform(0, 450, 150, 30);      // Left
+		platform[Pnum++] = Platform(275, 450, 150, 30);    // Center
+		platform[Pnum++] = Platform(550, 450, 150, 30);    // Right
+		platform[Pnum++] = Platform(150, 300, 150, 30);    // Upper left
+		platform[Pnum++] = Platform(400, 300, 150, 30);    // Upper right
 
 		enemies[Enum++] = new Botom(300, 150, 1.0f, 0);
+
+		texture.loadFromFile("C:\\Users\\abiha\\OneDrive\\Desktop\\repos\\SFML_VS_Setup_2026\\SFML_VS_Setup_2026\\x64\\Debug\\SnowBrosAssets\\Images\\lvl1_2.jpeg");
+		sprite.setTexture(texture);
+		sprite.setPosition(0, 0);
+		sprite.setScale(700.0f / texture.getSize().x, 700.0f / texture.getSize().y);
 	}
 	else if (levelNum == 3)
 	{
-		platform[Pnum++] = Platform(0, 520, 700, 30);      // Bottom
-		platform[Pnum++] = Platform(0, 500, 120, 30);      // Left column 1
-		platform[Pnum++] = Platform(150, 500, 120, 30);    // Left column 2
-		platform[Pnum++] = Platform(290, 450, 120, 30);    // Center
-		platform[Pnum++] = Platform(430, 500, 120, 30);    // Right column 1
-		platform[Pnum++] = Platform(580, 500, 120, 30);    // Right column 2
-		std::cout << "Level 3 loaded with " << Pnum << " platforms and " << Enum << " enemies.\n";
+		//platform[Pnum++] = Platform(0, 600, 700, 150);      // Bottom
+		platform[Pnum++] = Platform(0, 450, 120, 30);      // Left column 1
+		platform[Pnum++] = Platform(150, 450, 120, 30);    // Left column 2
+		platform[Pnum++] = Platform(290, 300, 120, 30);    // Center
+		platform[Pnum++] = Platform(430, 450, 120, 30);    // Right column 1
+		platform[Pnum++] = Platform(580, 450, 120, 30);    // Right column 2
+
 		enemies[Enum++] = new Botom(300, 150, 1.0f, 0);
-		std::cout << "enemy loaded";
+		
+		texture.loadFromFile("C:\\Users\\abiha\\OneDrive\\Desktop\\repos\\SFML_VS_Setup_2026\\SFML_VS_Setup_2026\\x64\\Debug\\SnowBrosAssets\\Images\\lvl3_4.jpeg");
+		sprite.setTexture(texture);
+		sprite.setPosition(0, 0);
+		sprite.setScale(700.0f / texture.getSize().x, 700.0f / texture.getSize().y);
 	}
 	else if (levelNum == 4)
 	{
-		platform[Pnum++] = Platform(0, 520, 700, 30);      // Bottom
-		platform[Pnum++] = Platform(50, 350, 200, 30);     // Left
-		//platform[Pnum++] = Platform(250, 400, 200, 30);    // Center-left
-		//platform[Pnum++] = Platform(450, 400, 200, 30);    // Center-right
-		platform[Pnum++] = Platform(600, 350, 100, 30);    // Right
+		//platform[Pnum++] = Platform(0, 600, 700, 150);      // Bottom
+		platform[Pnum++] = Platform(0, 380, 250, 30);     // Left
+		platform[Pnum++] = Platform(250, 250, 200, 30);    // Center-left
+		platform[Pnum++] = Platform(650, 180, 50, 30);    // Center-right
+		platform[Pnum++] = Platform(600, 380, 100, 30);    // Right
 		enemies[Enum++] = new Botom(300, 150, 1.0f, 0);
+
+		texture.loadFromFile("C:\\Users\\abiha\\OneDrive\\Desktop\\repos\\SFML_VS_Setup_2026\\SFML_VS_Setup_2026\\x64\\Debug\\SnowBrosAssets\\Images\\lvl3_4.jpeg");
+		sprite.setTexture(texture);
+		sprite.setPosition(0, 0);
+		sprite.setScale(700.0f / texture.getSize().x, 700.0f / texture.getSize().y);
 	}
 	else if (levelNum == 5)
 	{
-		platform[Pnum++] = Platform(0, 520, 700, 30);      // Bottom
-		platform[Pnum++] = Platform(100, 400, 150, 30);    // Left platform
-		platform[Pnum++] = Platform(450, 400, 150, 30);    // Right platform
-		enemies[Enum++] = new Botom(300, 150, 1.0f, 0);
+		//platform[Pnum++] = Platform(0, 600, 700, 150);      // Bottom
+		platform[Pnum++] = Platform(0, 400, 170, 30);    // Left platform
+		platform[Pnum++] = Platform(0, 280, 100, 30);    // Left 2
+		platform[Pnum++] = Platform(0, 100, 170, 30);	//left 3
+		platform[Pnum++] = Platform(400, 350, 300, 50);	//mogera
+		Mogera* m = new Mogera(600, 550, 200, this);
+		enemies[Enum++] = m;
+
+		texture.loadFromFile("C:\\Users\\abiha\\OneDrive\\Desktop\\repos\\SFML_VS_Setup_2026\\SFML_VS_Setup_2026\\x64\\Debug\\SnowBrosAssets\\Images\\lvl5.jpeg");
+		sprite.setTexture(texture);
+		sprite.setPosition(0, 0);
+		sprite.setScale(700.0f / texture.getSize().x, 700.0f / texture.getSize().y);
 	}
 	else if (levelNum == 6)
 	{
-		platform[Pnum++] = Platform(0, 520, 700, 30);      // Bottom
+		//platform[Pnum++] = Platform(0, 520, 700, 30);      // Bottom
 		platform[Pnum++] = Platform(50, 480, 130, 30);     // Left step 1
 		platform[Pnum++] = Platform(200, 380, 130, 30);    // Left step 2
 		platform[Pnum++] = Platform(350, 280, 130, 30);    // Center
 		platform[Pnum++] = Platform(500, 380, 130, 30);    // Right step 2
 		platform[Pnum++] = Platform(620, 480, 80, 30);     // Right step 1
 		enemies[Enum++] = new Botom(300, 150, 1.0f, 0);
+
+		texture.loadFromFile("C:\\Users\\abiha\\OneDrive\\Desktop\\repos\\SFML_VS_Setup_2026\\SFML_VS_Setup_2026\\x64\\Debug\\SnowBrosAssets\\Images\\lvl6_7.jpeg");
+		sprite.setTexture(texture);
+		sprite.setPosition(0, 0);
+		sprite.setScale(700.0f / texture.getSize().x, 700.0f / texture.getSize().y);
 	}
 	else if (levelNum == 7)
 	{
-		platform[Pnum++] = Platform(0, 520, 700, 30);      // Bottom
+		//platform[Pnum++] = Platform(0, 520, 700, 30);      // Bottom
 		platform[Pnum++] = Platform(100, 450, 150, 30);    // Left
 		platform[Pnum++] = Platform(275, 350, 150, 30);    // Center
 		platform[Pnum++] = Platform(450, 450, 150, 30);    // Right
 		platform[Pnum++] = Platform(200, 200, 300, 30);    // Top platform
 		enemies[Enum++] = new Botom(300, 150, 1.0f, 0);
+
+		texture.loadFromFile("C:\\Users\\abiha\\OneDrive\\Desktop\\repos\\SFML_VS_Setup_2026\\SFML_VS_Setup_2026\\x64\\Debug\\SnowBrosAssets\\Images\\lvl6_7.jpeg");
+		sprite.setTexture(texture);
+		sprite.setPosition(0, 0);
+		sprite.setScale(700.0f / texture.getSize().x, 700.0f / texture.getSize().y);
 	}
 	else if (levelNum == 8)
 	{
-		platform[Pnum++] = Platform(0, 520, 700, 30);      // Bottom
+		//platform[Pnum++] = Platform(0, 520, 700, 30);      // Bottom
 		platform[Pnum++] = Platform(50, 500, 100, 30);     // Left lower
 		platform[Pnum++] = Platform(150, 400, 100, 30);    // Left middle
 		platform[Pnum++] = Platform(275, 300, 150, 30);    // Center
 		platform[Pnum++] = Platform(500, 400, 100, 30);    // Right middle
 		platform[Pnum++] = Platform(600, 500, 100, 30);    // Right lower
 		enemies[Enum++] = new Botom(300, 150, 1.0f, 0);
+
+		texture.loadFromFile("C:\\Users\\abiha\\OneDrive\\Desktop\\repos\\SFML_VS_Setup_2026\\SFML_VS_Setup_2026\\x64\\Debug\\SnowBrosAssets\\Images\\lvl8_9.jpeg");
+		sprite.setTexture(texture);
+		sprite.setPosition(0, 0);
+		sprite.setScale(700.0f / texture.getSize().x, 700.0f / texture.getSize().y);
 	}
 	else if (levelNum == 9)
 	{
-		platform[Pnum++] = Platform(0, 520, 700, 30);      // Bottom
+		//platform[Pnum++] = Platform(0, 520, 700, 30);      // Bottom
 		platform[Pnum++] = Platform(75, 450, 120, 30);     // Left
 		platform[Pnum++] = Platform(290, 400, 120, 30);    // Center-left
 		platform[Pnum++] = Platform(510, 400, 120, 30);    // Center-right
 		platform[Pnum++] = Platform(600, 450, 100, 30);    // Right
 		enemies[Enum++] = new Botom(300, 150, 1.0f, 0);
+
+		texture.loadFromFile("C:\\Users\\abiha\\OneDrive\\Desktop\\repos\\SFML_VS_Setup_2026\\SFML_VS_Setup_2026\\x64\\Debug\\SnowBrosAssets\\Images\\lvl8_9.jpeg");
+		sprite.setTexture(texture);
+		sprite.setPosition(0, 0);
+		sprite.setScale(700.0f / texture.getSize().x, 700.0f / texture.getSize().y);
 	}
 	else if (levelNum == 10)
 	{
-		platform[Pnum++] = Platform(0, 520, 700, 30);      // Bottom
-		platform[Pnum++] = Platform(100, 400, 150, 30);    // Left platform
-		platform[Pnum++] = Platform(450, 400, 150, 30);    // Right platform
-		enemies[Enum++] = new Botom(300, 150, 1.0f, 0);
+		
+		platform[Pnum++] = Platform(0, 400, 150, 30);  
+		platform[Pnum++] = Platform(0, 300, 150, 30);    
+		platform[Pnum++] = Platform(550, 400, 150, 30);  
+		platform[Pnum++] = Platform(550, 300, 150, 30);
+
+		enemies[Enum++] = new Gamakichi(300, 150, 100);
+
+		texture.loadFromFile("C:\\Users\\abiha\\OneDrive\\Desktop\\repos\\SFML_VS_Setup_2026\\SFML_VS_Setup_2026\\x64\\Debug\\SnowBrosAssets\\Images\\lvl10.jpeg");
+		sprite.setTexture(texture);
+		sprite.setPosition(0, 0);
+		sprite.setScale(700.0f / texture.getSize().x, 700.0f / texture.getSize().y);
 	}
 }
 
@@ -320,69 +376,96 @@ void playState::handleInput(inputManager& input)
 	}
 	SBnum = writePos;
 
-	//Snowball and enemy collision=================================
-	for (int e = 0; e < Enum; e++)
-	{
-		sf::FloatRect enemyBounds = enemies[e]->getBounds();
-
-		for (int s = 0; s < SBnum; s++)
+	/////////////////////SNOWBALL AND ENEMY AND CHAIN ROLL AND HP MANAGED
+		for (int e = 0; e < Enum; e++)
 		{
-			// ADDED: skip if snowball is already a frozen enemy
-			if (snowball[s].isFrozen())
+			sf::FloatRect enemyBounds = enemies[e]->getBounds();
+			EnemyType enemyType = enemies[e]->getEnemyType();
+
+			bool isBoss = (enemyType == MOGERA || enemyType == GAMAKICHI);
+
+			for (int s = 0; s < SBnum; s++)
 			{
-				// Frozen snowball kills regular enemies on contact
-				EnemyType frozenType = (EnemyType)snowball[s].getFrozenEnemyType();
-				if (frozenType != MOGERA && frozenType != GAMAKICHI &&
-					enemyBounds.intersects(snowball[s].getBounds()))
+				if (snowball[s].isFrozen())
 				{
-					enemies[e]->take_damage(999); // One shot kill
-				}
-				continue;
-			}
+					EnemyType frozenType = (EnemyType)snowball[s].getFrozenEnemyType();
 
-			sf::FloatRect snowballBounds = snowball[s].getBounds();
-
-			if (enemyBounds.intersects(snowballBounds))
-			{
-				enemies[e]->take_damage(1);
-				EnemyType enemyType = enemies[e]->getEnemyType();
-
-				// ADDED: snowball power makes encase in 1 hit
-				// Check if any player has snowball power active
-				bool hasSnowballPower = false;
-				for (int p = 0; p < playerCount; p++)
-				{
-					if (players[p].isSnowballPowerActive())
+					if (frozenType != MOGERA && frozenType != GAMAKICHI &&
+						enemyBounds.intersects(snowball[s].getBounds()))
 					{
-						hasSnowballPower = true;
-						break;
+						enemies[e]->take_damage(999); // normal enemies only
 					}
+
+					continue;
 				}
 
-				if (hasSnowballPower)
-					enemies[e]->apply_snow_hit(999);
-				else
-					enemies[e]->apply_snow_hit(1);
+				sf::FloatRect snowballBounds = snowball[s].getBounds();
 
-				// ADDED: if enemy dies and is not a boss, chance to turn into rolling snowball
-				if (enemies[e]->get_hp() <= 0 && enemyType != MOGERA && enemyType != GAMAKICHI)
+				if (enemyBounds.intersects(snowballBounds))
 				{
-					// ADDED: 50% chance to turn into rolling snowball
-					int roll = rand() % 100;
-					if (roll < 50)
-					{
-						// Turn snowball into rolling enemy snowball
-						snowball[s].freezeEnemy(enemyType,
-							enemies[e]->getBounds().left,
-							enemies[e]->getBounds().top);
-						continue; // Snowball keeps moving, don't set inactive
-					}
-				}
+					bool hasSnowballPower = false;
 
-				snowball[s].setInactive();
+					for (int p = 0; p < playerCount; p++)
+					{
+						if (players[p].isSnowballPowerActive())
+						{
+							hasSnowballPower = true;
+							break;
+						}
+					}
+
+					// ===================== DAMAGE SYSTEM =====================
+
+					if (isBoss)
+					{
+						//ONLY HP SYSTEM
+						if (hasSnowballPower)
+							enemies[e]->take_damage(3);
+						else
+							enemies[e]->take_damage(1);
+					}
+					else
+					{
+						//normal enemiss work on encase logic
+						if (hasSnowballPower)
+							enemies[e]->apply_snow_hit(999);
+						else
+							enemies[e]->apply_snow_hit(1);
+					}
+
+					// ===================== ENCASED LOGIC =====================
+
+					if (enemies[e]->get_encased())
+					{
+						if (isBoss)
+						{
+							//boss cant die from encasing chain roll
+							enemies[e]->take_damage(1);
+						}
+						else
+						{
+							int roll = rand() % 100;
+
+							if (roll < 50)
+							{
+								snowball[s].freezeEnemy(enemyType,
+									enemies[e]->getBounds().left,
+									enemies[e]->getBounds().top);
+
+								enemies[e]->take_damage(999);
+								continue;
+							}
+							else
+							{
+								enemies[e]->take_damage(999);
+							}
+						}
+					}
+
+					snowball[s].setInactive();
+				}
 			}
 		}
-	}
 	// Update projectiles
 	for (int i = 0; i < projectile_count; i++)
 		projectile[i]->update(0.016f);
@@ -573,7 +656,7 @@ void playState::update()
 	// Level 4 & 9: cash rain when all enemies dead====================
 	if ((level == 4 || level == 9) && Enum == 0 && gemCount == 0 && !levelTransitioning)
 	{
-		spawnGemRain(10, true);
+		spawnGemRain(5, true);
 	}
 
 	updateGems(0.016f);
@@ -614,6 +697,8 @@ void playState::update()
 
 void playState::render(sf::RenderWindow& window)
 {
+	window.draw(sprite);
+
 	for (int i = 0; i < Pnum; i++)
 		platform[i].render(window);
 
@@ -708,11 +793,11 @@ void playState::updateGems(float deltaTime)
 	{
 		if (!gemCollected[i])
 		{
-			gemVelocity[i] += 0.05f;
+			gemVelocity[i] += 0.02f;
 			gemY[i] += gemVelocity[i];
 
-			if (gemY[i] >= 650)
-				gemY[i] = 650;
+			if (gemY[i] >= 550)
+				gemY[i] = 550;
 		}
 	}
 
@@ -805,4 +890,10 @@ void playState::setLevel(int lv)
 bool playState::setMultiplayer(bool multiplayer)
 {
 	return multiplayer;
+}
+
+void playState::addEnemy(Enemy* e)
+{
+	if (Enum < 500)
+		enemies[Enum++] = e;
 }
